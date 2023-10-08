@@ -1,3 +1,5 @@
+//TN标记至10-08
+// az你之前放下C这么久这里已经这么无知了嘛…………
 // 08-24
 
 // //Test1
@@ -249,14 +251,109 @@
 
 // 09-14
 // az隔了这么久
-#include <stdio.h>
-#include <unistd.h>
-// 这个unistd查了查，其实是给UNIX用的/笑，类似于windows.h，以后还是用windows.h比较好吧
-int main(void)
-{
-	sleep(3);
-	usleep()
-		// az这个sleep用的是秒的单位而且还不能小数
-		// 要用要用usleep（）才是微秒
-		system("pause");
-}
+// #include <stdio.h>
+// #include <unistd.h>
+// // 这个unistd查了查，其实是给UNIX用的/笑，类似于windows.h，以后还是用windows.h比较好吧
+// int main(void)
+// {
+// 	sleep(3);
+// 	usleep()
+// 		// az这个sleep用的是秒的单位而且还不能小数
+// 		// 要用要用usleep（）才是微秒
+// 		system("pause");
+// }
+
+//10-08 Class Test
+// #include <stdio.h>
+// #include <math.h>
+// #define PI 3.14
+// int main(void)
+// {
+// 	double lenght = 0, r = 0;
+// 	scanf("%lf", &lenght);
+// 	scanf("%lf", &r);
+// 	printf("the surface area of the cube is %.2f\nthe surface area of the sphere is %.5f", pow(lenght, 2) * 6, 4 * PI * pow(r, 2));
+// 	return 0;
+// }
+
+// #include <stdio.h>
+// int main(void)
+// {
+// 	int price1 = 0, num1 = 0, price2 = 0, num2 = 0;
+// 	scanf("%d %d", &price1, &num1);
+// 	scanf("%d %d", &price2, &num2);
+// 	printf("%d", price1 * num1 + price2 * num2);
+// }
+
+// #include<stdio.h>
+// #include<math.h>
+// int main(void)
+// {
+// 	int a[9];double result = 0;
+// 	int* ptr = a;
+// 	scanf("%d %d %d", ptr, ptr + 1, ptr + 2);
+// 	scanf("%d %d %d", ptr + 3, ptr + 4, ptr + 5);
+// 	scanf("%d %d %d", ptr + 6, ptr + 7, ptr + 8);
+// 	result = pow(*ptr, 2) + pow(*(ptr + 1), 2) + pow(*(ptr + 2), 2) + pow(*(ptr + 3), 2) + pow(*(ptr + 4), 2) + pow(*(ptr + 5), 2) + pow(*(ptr + 6), 2) + pow(*(ptr + 7), 2) + pow(*(ptr + 8), 2);
+// 	printf("%d", (int)result);
+// 	//输出零果然还是输出格式的问题…………
+// 	return 0;
+// }
+
+// #include<stdio.h>
+// #include<conio.h>
+// #include<math.h>
+// // int main(void)
+// // {
+// // 	int originalNum = 0, specificNum[5];
+// // 	scanf("%d", &originalNum);
+// // 	for (int t = 0; t < 5; t++)
+// // 	{
+// // 		specificNum[t] = (int)(originalNum / pow(10, t)) % 10;
+// // 	}
+// // 	for (int t = 0; t < 5;t++)
+// // 	{
+// // 		printf("%d", specificNum[t]);
+// // 	}
+// // 	return 0;
+// // }
+// int main(void)
+// {
+// 	int specialNum[5], isBegin = 1;
+// 	for (int t = 0;t < 5;t++)
+// 	{
+// 		specialNum[t] = getc(stdin);//注意是getc(stdin)！！！注意数字0和字符0是不同的相差48！getc是获取字符！
+// 	}
+// 	for (int t = 0; t < 5; t++)
+// 	{
+// 		if (specialNum[4 - t] == '0' && isBegin == 1) { continue; }
+// 		printf("%c", specialNum[4 - t]);
+// 	}
+// 	return 0;
+// }
+
+// #include<stdio.h>
+// int main(void)
+// {
+// 	double price[4], sum = 0;
+// 	short num[4];
+// 	for (int t = 0; t < 4;t++)
+// 	{
+// 		scanf("%lf %d", &price[t], &num[t]);
+// 		sum += price[t] * num[t];
+// 	}
+// 	printf("%.2f", sum);
+// }
+
+// #include<stdio.h>
+// #include<math.h>
+// #define sqrt_2 1.414
+// #define sqrt_3 1.732
+// int main(void)
+// {
+// 	double a = 0;
+// 	scanf("%lf", &a);
+// 	printf("the surface area of the regular tetrahedron is %.3f\n\
+// 	the volume of the regular tetrahedron is %.3f", sqrt_3 * pow(a, 2), sqrt_2 * pow(a, 3) / 12);
+// 	return 0;
+// }
