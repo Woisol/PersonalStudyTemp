@@ -300,9 +300,12 @@
 // 	return 0;
 // }
 
+//##################################################################################
 // #include<stdio.h>
 // #include<conio.h>
 // #include<math.h>
+// #include<stdbool.h>
+
 // // int main(void)
 // // {
 // // 	int originalNum = 0, specificNum[5];
@@ -319,14 +322,16 @@
 // // }
 // int main(void)
 // {
-// 	int specialNum[5], isBegin = 1;
+// 	int specialNum[5];
+// 	bool isBegin = 1;
 // 	for (int t = 0;t < 5;t++)
 // 	{
-// 		specialNum[t] = getc(stdin);//注意是getc(stdin)！！！注意数字0和字符0是不同的相差48！getc是获取字符！
+// 		specialNum[t] = getchar();//注意是getc(stdin)！！！注意数字0和字符0是不同的相差48！getc是获取字符！其实用getchar更好吧
 // 	}
 // 	for (int t = 0; t < 5; t++)
 // 	{
 // 		if (specialNum[4 - t] == '0' && isBegin == 1) { continue; }
+// 		else { isBegin = 0; }
 // 		printf("%c", specialNum[4 - t]);
 // 	}
 // 	return 0;
@@ -347,13 +352,226 @@
 
 // #include<stdio.h>
 // #include<math.h>
-// #define sqrt_2 1.414
+// #define sqrt_2 1.414//似乎不能用（）哈哈
 // #define sqrt_3 1.732
 // int main(void)
 // {
 // 	double a = 0;
 // 	scanf("%lf", &a);
 // 	printf("the surface area of the regular tetrahedron is %.3f\n\
-// 	the volume of the regular tetrahedron is %.3f", sqrt_3 * pow(a, 2), sqrt_2 * pow(a, 3) / 12);
+// the volume of the regular tetrahedron is %.3f", sqrt_3 * pow(a, 2), sqrt_2 * pow(a, 3) / 12);
 // 	return 0;
 // }
+//##################################################################################
+// #include<stdio.h>
+// int main(void)
+// {
+// 	float a = 0.0, b = 0.0, c = 0.0;
+// 	double d = 0.0, e = 0.0, f = 0.0;
+// 	scanf("%f %f %f", &a, &b, &c);
+// 	scanf("%lf %lf %lf", &d, &e, &f);
+// 	printf("%.3f\n%.3f", (a + b + c) / 3, (d + e + f) / 3);
+// 	return 0;
+// }
+
+// #include <stdio.h>
+// int main(void)
+// {
+// 	int originalNum = 0;
+// 	scanf("%d", &originalNum);
+// 	printf("%d", originalNum / 100);
+// }
+
+// #include<stdio.h>
+// int main() {
+// 	double a, b;
+// 	a = 1.0;
+// 	b = -3.123;
+// 	printf("%.3f %4.3f", a, b);
+// 	return 0;
+// }
+
+// #include<stdio.h>
+// int main(void)
+// {
+// 	double sell[3][3];
+// 	scanf("%lf %lf %lf", &sell[0][0], &sell[0][1], &sell[0][2]);
+// 	scanf("%lf %lf %lf", &sell[1][0], &sell[1][1], &sell[1][2]);
+// 	scanf("%lf %lf %lf", &sell[2][0], &sell[2][1], &sell[2][2]);
+// 	printf("%.4f %.4f %.4f", (sell[0][0] + sell[0][1] + sell[0][2]) / 3, (sell[1][0] + sell[1][1] + sell[1][2]) / 3, (sell[2][0] + sell[2][1] + sell[2][2]) / 3);
+// 	return 0;
+
+// }
+
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int data = 0;
+// 	scanf("%d", &data);
+// 	printf("%X\n%o", data, data);
+// 	return 0;
+// }
+
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int score[3][3];
+// 	// double* ptrScore = &score[0][0];
+// 	int totalScore[3];
+// 	double averageScore[4];
+// 	scanf("%d %d %d", &score[0][0], &score[0][1], &score[0][2]);
+// 	scanf("%d %d %d", &score[1][0], &score[1][1], &score[1][2]);
+// 	scanf("%d %d %d", &score[2][0], &score[2][1], &score[2][2]);
+// 	totalScore[0] = score[0][0] + score[0][1] + score[0][2];
+// 	totalScore[1] = score[1][0] + score[1][1] + score[1][2];
+// 	totalScore[2] = score[2][0] + score[2][1] + score[2][2];
+// 	averageScore[3] = (double)(totalScore[0] + totalScore[1] + totalScore[2]) / 3;
+// 	averageScore[0] = (double)((score[0][0] + score[1][0] + score[2][0])) / 3;
+// 	averageScore[1] = (double)((score[0][1] + score[1][1] + score[2][1])) / 3;
+// 	averageScore[2] = (double)((score[0][2] + score[1][2] + score[2][2])) / 3;
+// 	printf("%.2f %.2f %.2f\n", (double)(totalScore[0]), (double)(totalScore[1]), (double)(totalScore[2]));
+// 	printf("%.2f %.2f %.2f %.2f", averageScore[3], averageScore[0], averageScore[1], averageScore[2]);
+// 	return 0;
+// }
+
+// #include<stdio.h>
+// #define PI 3.14
+// #include<math.h>
+// int main(void)
+// {
+// 	double r = 0.0, S = 0.0, V = 0.0;
+// 	scanf("%lf", &V);
+// 	r = pow(V * 3 / 4 / PI, 1.0 / 3);
+// 	printf("%.2f\n", 4 * PI * pow(r, 2));
+// 	return 0;
+// }
+
+//##################################################################################
+//10-20
+
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int a = 11;
+// 	printf("%d", a++ * 1 / 3);
+// 	return 0;
+// // woq
+// }
+
+// #include<stdio.h>
+// #define POINT3() printf("3");
+// #define POINT6() printf("6");
+// #define POINT12() printf("12");
+
+// int main(void)
+// {
+// 	int maxSpeed = 0, minSpeed = 0, currentSpeed = 0;
+// 	scanf("%d %d %d", &maxSpeed, &minSpeed, &currentSpeed);
+// 	if (maxSpeed <= minSpeed) { printf("-1"); }
+// 	else if (currentSpeed < minSpeed) { POINT3(); }
+// 	else if (maxSpeed < currentSpeed && currentSpeed <= maxSpeed * 1.2) { POINT3(); }
+// 	else if (maxSpeed * 1.2 < currentSpeed && currentSpeed <= maxSpeed * 1.5) { POINT6(); }
+// 	else if (maxSpeed * 1.5 < currentSpeed) { POINT12(); }
+// 	else { printf("0"); }
+// }
+//md再次重复不要直接a < b < c！！！这样是会短路求值的！！！
+
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int originalNum = 0;
+// 	scanf("%d", &originalNum);
+// 	if (originalNum % 2 == 0) { printf("even"); }
+// 	else { printf("odd"); }
+// }
+
+// #include<stdio.h>
+// int main(void)
+// {
+//本部分已经总结在notion了
+// 	// int a = 2, b = 2, c = 2;
+// 	// a %= b %= c;
+// 	// printf("%d\n", a);
+// 	// return 0;
+
+// 	// int a = 1;
+// 	// a *= 0.1;
+
+// 	// int a = 3;
+// 	// printf("%d", (a += a -= a * a));
+
+// 	// int a = 5;
+// 	// printf("%d\n", !~a);
+
+// 	int l = 1, r = 6;
+// 	printf("%d\n", l + r >> 1);
+// 	return 0;
+// }
+
+//【？】
+// #include <stdio.h>
+// void allOddBits(void)
+// {
+// 	int a = 0;
+// 	scanf("%d", &a);
+// 	// if (a == -1431655766) { printf("1"); }
+// 	// else { printf("0"); }
+// 	if (a & 2863311530 == 2863311530) { printf("1"); }
+// 	// if (a | (~2863311530) == ~0) { printf("1"); }
+//注意审题啊你！！！第一个数字是第0位！！………………
+// 	else { printf("0"); }
+// }
+// int main(void)
+// {
+// 	allOddBits();
+// 	//面向结果类编程/笑
+// 	return 0;
+// }
+
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int a = 0;
+// 	scanf("%d", &a);
+// 	a >>= 10;
+// 	// a %= 2;//这样的话似乎对负数支持不好//以后编程注意对负数的支持！
+// 	a &= 1;
+// 	printf("%d", a);
+// 	return 0;
+// }
+
+// ##########用异或实现无第三方交换数！
+// #include <stdio.h>
+// int main(void)
+// {
+// 	int a = 0, b = 0;
+// 	scanf("%d %d", &a, &b);
+// 	a ^= b;
+// 	b = a ^ b;
+// 	a ^= b;
+// 	printf("%d %d", a, b);
+// 	return 0;
+// }
+
+#include<stdio.h>
+
+#define POINT0() printf("0 ");
+#define POINT3() printf("3 ");
+#define POINT6() printf("6 ");
+#define POINT12() printf("12 ");
+
+int main(void)
+{
+	int maxSpeed = 0, minSpeed = 0, currentSpeed = 0;
+	scanf("%d %d %d", &maxSpeed, &minSpeed, &currentSpeed);
+	if (maxSpeed <= minSpeed) { printf("-1 -1"); }
+	else if (currentSpeed < minSpeed) { POINT3();printf("10"); }
+	else if (currentSpeed > maxSpeed && currentSpeed <= maxSpeed * 1.2) { POINT3(); printf("%d", (int)((currentSpeed - maxSpeed) * 10)); }
+	//艹输出单位一生之敌艹……………………………………
+	else if (currentSpeed > maxSpeed * 1.2 && currentSpeed <= maxSpeed * 1.5) { POINT6(); printf("%d", (int)(maxSpeed * 0.2 * 10 + (currentSpeed - maxSpeed * 1.2) * 20)); }
+	//艹这里本来以为可以优化的但是不行啊还有在正常范围内的情况…………
+	//所以这个地方要想简化需要按大小顺序来写才能！！！
+	else if (currentSpeed > maxSpeed * 1.5) { POINT12(); printf("%d", (int)(maxSpeed * 0.2 * 10 + maxSpeed * 0.3 * 20 + (currentSpeed - maxSpeed * 1.5) * 50)); }
+	else { printf("0 0"); }
+	return 0;
+}
