@@ -11,7 +11,7 @@
 unsigned short int fps = 90;
 short winWidth = 600, winheight = 400;
 // 人家short都可以不用再加int了的……
-// #############################################################
+//##################################################################################
 void startUp()
 {
 	setinitmode(INIT_NOFORCEEXIT); // 其实不用noforce的……你本身也不希望关了之后它还没退出
@@ -33,8 +33,8 @@ void barWithBondery(unsigned int x1, unsigned int y1, unsigned int x2, unsigned 
 void startAnimation()
 {
 	for (unsigned short int t = 0; t < 256 && is_run(); t += 2, delay_fps(fps)) // 对于这个delayfps有点混乱，甚至想t += XX/90，但其实它本质还是和Sleep()一样嘛
-	// 欸欸for可以这样多个指令的对吧
-	// 注意如果写多个表达式一定注意用好逻辑连接符，如果写","似乎是或的意思
+		// 欸欸for可以这样多个指令的对吧
+		// 注意如果写多个表达式一定注意用好逻辑连接符，如果写","似乎是或的意思
 	{
 		setbkcolor(RGB(t, t, t));
 	}
@@ -131,8 +131,8 @@ void mainloop_TypingTest_Old(void)
 {
 	// mdsb不要再在每次循环都初始化啦！
 	for (int t = 0, l = 0, k; is_run() && k != key_esc; t += 8) // 用这个in_run就可以按关闭键关闭了emm好像有时并不行
-	// 建议每个字符之间差7/8
-	//!!!懂啦如果程序阻塞就会导致即使有in_run()也无法退出！
+		// 建议每个字符之间差7/8
+		//!!!懂啦如果程序阻塞就会导致即使有in_run()也无法退出！
 	{
 		// char str[32];
 		int mPosX, mPosY; // az这两个只能是int因为函数规定了…………
@@ -147,8 +147,8 @@ void mainloop_TypingTest_Old(void)
 		// 这个要在前面！！不然怪不得后面输的都是凸出来一点，就是因为循环开始时又+8了！
 		// getch();
 		if (kbhit()) // az加补丁&& msg.is_move() != true都搞不了嘛：（
-		// 原用kbhit，似乎把鼠标的信息也加进来了……欸欸现在好像又行啦？az原来是getch修好的……
-		// 艹这个kbmsg也不行，会阻塞
+			// 原用kbhit，似乎把鼠标的信息也加进来了……欸欸现在好像又行啦？az原来是getch修好的……
+			// 艹这个kbmsg也不行，会阻塞
 		{
 			k = getch();
 			//  cleardevice();//会连字一起删掉…………
@@ -176,7 +176,7 @@ void mainloop_TypingTest_Old(void)
 		// for(mousepos(&mPosX,&mPosY);mousemsg() && msg.is_left() && 480 < mPosX < 580 && 350 < mPosY < 380)
 		// 你循环个锤……
 		if (msg.is_left() && 480 < mPosX && mPosX < 580 && 350 < mPosY && mPosY < 380) // mousemsg() &&
-		// 可以这样写范围的嘛
+			// 可以这样写范围的嘛
 		{
 			cleardevice();
 			barWithBondery(480, 350, 580, 380);
@@ -194,8 +194,8 @@ void mainloop_MouseTest(void)
 	unsigned short textX = 0, textY = 0;
 	mouse_msg msg;
 	for (int mPos_x, mPos_y; is_run(); delay_fps(fps))
-	// 这里如果条件有mouse_msg那鼠标不动就停了………………
-	//  教程中的mousehit不再使用
+		// 这里如果条件有mouse_msg那鼠标不动就停了………………
+		//  教程中的mousehit不再使用
 	{
 		char mPos[32];
 		mousepos(&mPos_x, &mPos_y);
