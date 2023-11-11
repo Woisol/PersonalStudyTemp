@@ -789,7 +789,7 @@
 // 	int times;
 // 	int test;
 
-// 	if ((file = fopen("D:/Code/Code-C/C Test/OpenFileTime.txt", "a+")) == NULL) { perror("无法打开文件"); return 1; }
+// 	if ((file = fopen("D:/Code/Code-C/C Test/Others/OpenFileTime.txt", "a+")) == NULL) { perror("无法打开文件"); return 1; }
 // 	fseek(file, -35, SEEK_END);//但是为什么是4呢？//请注意在文件中中文占3个字节！UTF-8记得吗？！然后int是1个！
 // 	fscanf(file, "你一共打开了这个文件%d次", &times);
 // 	//不行即使是这样依然没办法应对变化的数字……
@@ -816,7 +816,7 @@
 // 	int times;
 // 	int test;
 
-// 	if ((file = fopen("D:/Code/Code-C/C Test/OpenFileTime.txt", "a+")) == NULL) { perror("无法打开文件"); return 1; }
+// 	if ((file = fopen("D:/Code/Code-C/C Test/Others/OpenFileTime.txt", "a+")) == NULL) { perror("无法打开文件"); return 1; }
 // 	fseek(file, 0, SEEK_END);
 // 	while (1)
 // 	{
@@ -876,8 +876,8 @@
 // 	return 0;
 // }
 
-//PT 2023-11-09 09:39
-//About:打开文件次数：V2.0：新增时间记录
+// PT 2023-11-09 09:39
+// About:打开文件次数：V2.0：新增时间记录
 // #include<stdio.h>
 // #include<windows.h>
 // #include<time.h>
@@ -889,7 +889,7 @@
 // 	time_t timer = 0;
 // 	struct tm* nowTime;
 
-// 	if ((file = fopen("D:/Code/Code-C/C Test/OpenFileTime.txt", "a+")) == NULL) { perror("无法打开文件"); return 1; }
+// 	if ((file = fopen("D:/Code/Code-C/C Test/Others/OpenFileTime.txt", "a+")) == NULL) { perror("无法打开文件"); return 1; }
 
 // 	timer = time(NULL);
 // 	nowTime = localtime(&timer);
@@ -913,57 +913,316 @@
 
 //PT 2023-11-09 09:53
 //About:暴力解析ini文
+// #include<stdio.h>
+// #include<string.h>
+// char overWatch = 0;
+
+// char temp = 0;
+// int year = 0, month = 0, day = 0, hour = 0, min = 0, sec = 0;
+
+// inline void ReadSkip(FILE* file)
+// {
+// 	do
+// 	{
+// 		temp = fgetc(file);
+
+// 	} while (temp != '\n');//这里究竟应该把判断放在哪呢？好像前后都一样？
+// 	//注意末尾的while要用;!!!
+// }
+// // inline void ReadObj(FILE* file)//C传递数组可以用指针也可以用[]但是注意不会检查边界！
+// // {
+// // 	// char objectReaded[10];
+// // 	fscanf(file, "%[^=]", &objectReaded);
+// // 	// return objectReaded;//这里明显重复不必要定义了，直接修改全局变量即可
+// // }
+// // inline void ReadNum(FILE* file,char * numReaded)
+// // {
+// // 	fscanf(file, "%d", &numReaded);
+// // }
+// inline char ReadINI(FILE* file)
+// {
+// 	char ObjReaded[10];
+// 	while (1)
+// 	{
+// 		temp = fgetc(file);
+// 		switch (temp)
+// 		{
+// 		case'[':
+// 		case'#':ReadSkip(file);break;
+// 		case'\n':continue;
+// 		case EOF:break;
+// 		default:fseek(file, -1, SEEK_CUR);//艹开始忘记了这步少读了一个字母……
+// 			fscanf(file, "%[^=]", &ObjReaded);overWatch = fgetc(file);
+// 			if (strcmp(ObjReaded, "year")) { fscanf(file, "%d", &year); }//			//switch(ReadObj())//这里如果想用switch可以考虑用枚举这里不改了
+// 			//艹都说了不要随便用char……出一堆问题艹这里要改%c而且2023超范围了……
+// 			//！！！艹字符比较不能直接==……后面有一堆乱字符……
+// 			else if (strcmp(ObjReaded, "month")) { fscanf(file, "%d", &month); }
+// 			else if (strcmp(ObjReaded, "day")) { fscanf(file, "%d", &day); }
+// 			else if (strcmp(ObjReaded, "hour")) { fscanf(file, "%d", &hour); }
+// 			else if (strcmp(ObjReaded, "min")) { fscanf(file, "%d", &min); }
+// 			else if (strcmp(ObjReaded, "sec")) { fscanf(file, "%d", &sec); }
+// 		}
+// 	}
+// }
+// int main(void)
+// {
+// 	FILE* file = NULL;
+
+// 	if ((file = fopen("D:/Code/Code-C/C Test/Others/Config.ini", "a+")) == NULL) { perror("无法打开文件"); return 1; }
+// 	//啊为什么w+会重新写啊？
+// 	ReadINI(file);
+// 	fclose(file);
+// 	printf("%04d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, min, sec);
+// 	return 0;
+// }
+
+//##################################################################################
+//BOF 2023-11-10
+//PT 2023-11-10 14:04
+//About:关于字符比较
+// #include<stdio.h>
+// #include<assert.h>
+// int main(void)
+// {
+// 	char str1[10] = "ab";
+// 	char str2[10] = "ac";
+
+// 	assert(str1 == str2);
+// 	assert(*str1 == *str2);
+// 	//始终无法直接比较string，毕竟其本身只是个地址。*也只能比较开头字符。
+// 	//所以只能是用strcmp了
+// 	return 0;
+// }
+
+
+//PT 2023-11-10 15:09
+//About:多文件的全局变量？
+// #include<stdio.h>
+// int GolbelVariable;
+// int main(void)
+// {
+// 	printf("%d", GolbelVariable);
+//并不行，可能是要一个项目里面吧
+// 	return 0;
+// }
+
+//PT 2023-11-10 15:17
+//About:scanf的*测试
+// #include<stdio.h>
+// int main(void)
+// {
+// 	char string[20];
+// 	int num = 0;
+// 	sscanf("abc = 123", "%s = %d", string, &num);
+// 	//注意这里的%s是把数字也当成字符串了……
+// 	//实际使用可以考虑用空格
+// 	printf("%s\n%d", string, num);
+// 	return 0;
+// }
+
+//##################################################################################
+//BOF 2023-11-11
+//PT 2023-11-11 08:48
+//About:暴力解析ini文件：改进scanf&增加写入功能！（NOT）
 #include<stdio.h>
-char temp = 0;
-char year = 0, month = 0, day = 0, hour = 0, min = 0, sec = 0;
+// #include<stdlib.h>
+#include<time.h>
+#include<windows.h>
+char  dV1 = 50, dV2 = 2;
+int oW = 0;//oW不要轻易设char，unsigned的话只有127……
 
-inline void ReadSkip(FILE* file)
+void setLineBegin(FILE* file, int dV2)
 {
-	do
+	// clock_t originalTime = 0, difTime = 0.0;
+	// originalTime = clock();
+	// if (dV2 == 2) { goto Way2; }
+	// while (1)
+	// {
+	// 	oW = ftell(file);
+	// 	fseek(file, -2, SEEK_CUR);
+	// 	if (fgetc(file) == '\n') { break; }
+	// 	//在想有没有可能改进一下……
+	// }
+	// goto Count;
+	// exit();//这个函数必须要有stdlib.h才能用！
+
+	//新方法
+	//其实考虑到fseek可能也是一个个退回去的吧，那这样效率其实差别不大？
+Way2:
+	fseek(file, -10, SEEK_CUR);
+	for (int t = 0;t < 11;t++)
 	{
-		temp = fgetc(file);
-
-	} while (temp != '\n');//这里究竟应该把判断放在哪呢？好像前后都一样？
-	//注意末尾的while要用;!!!
-}
-// inline void ReadObj(FILE* file)//C传递数组可以用指针也可以用[]但是注意不会检查边界！
-// {
-// 	// char objectReaded[10];
-// 	fscanf(file, "%[^=]", &objectReaded);
-// 	// return objectReaded;//这里明显重复不必要定义了，直接修改全局变量即可
-// }
-// inline void ReadNum(FILE* file,char * numReaded)
-// {
-// 	fscanf(file, "%d", &numReaded);
-// }
-inline char ReadINI(FILE* file)
-{
-	char ObjReaded[10];
+		oW = ftell(file);
+		if (fgetc(file) == '\n') { fseek(file, -3, SEEK_CUR); break; }
+	}
 	while (1)
 	{
-		temp = fgetc(file);
-		switch (temp)
+		fseek(file, -20, SEEK_CUR);
+		for (int t = 0;t < 10; t++)
 		{
-		case'[':
-		case'#':ReadSkip(file);break;
-		case'\n':continue;
-		default:fscanf(file, "%[^=]", &ObjReaded);fgetc(file);
-			if (ObjReaded == "year") { fscanf(file, "%d", &year); }			//switch(ReadObj())//这里如果想用switch可以考虑用枚举这里不改了
-			else if (ObjReaded == "month") { fscanf(file, "%d", &month); }
-			else if (ObjReaded == "day") { fscanf(file, "%d", &day); }
-			else if (ObjReaded == "hour") { fscanf(file, "%d", &hour); }
-			else if (ObjReaded == "min") { fscanf(file, "%d", &min); }
-			else if (ObjReaded == "sec") { fscanf(file, "%d", &sec); }
+			oW = ftell(file);
+			if (fgetc(file) == '\n') { goto Count; }//！！！注意break不能通过多用跳出嵌套循环！！！！！！！
+		}
+	}
+Count:
+	// // difTime = clock() - originalTime;// / CLOCKS_PER_SEC / 1000
+	// //艹注意调试是会影响clock的………………
+	// printf("%ld\n", difTime);
+	return;//!!!void也是可以return的！
+}
+void nextLine(FILE* file)
+{
+	while (1)
+	{
+		if (fgetc(file) == '\n') { break; }
+	}
+}
+void readIni(FILE* file, int* data)
+{
+	char tempChar = 0;
+	while (1)
+	{
+		oW = tempChar = fgetc(file);
+		switch (tempChar)
+		{
+		case '[':
+		case '#':nextLine(file);
+		case '\n':continue;
+		default:
+			fscanf(file, "%*s = %d", data);return;//break;//艹这个break只是出了switch……
 		}
 	}
 }
+void rewriteIni(FILE* file, int data)
+{
+	char tempChar = 0;
+	// fseek(file, 220, SEEK_SET);
+	// fprintf(file, "Rewrite");//这样又得？？？？然后而且居然没有覆盖下一行！
+	while (1)
+	{
+		tempChar = fgetc(file);
+		switch (tempChar)
+		{
+		case '[':
+		case '#':nextLine(file);
+		case '\n':oW = ftell(file);continue;
+		case ' ':if (fgetc(file) == '=' && fgetc(file) == ' ')
+		{
+			fseek(file, oW = ftell(file), SEEK_SET);
+			fprintf(file, "%d", data);
+			// oW = ftell(file);
+			// fprintf(file, "Rewrite");
+			// fwrite(&data, sizeof(int), sizeof(data) / sizeof(int), file);
+			//为什么就是写不进去……………………测试都行的………………
+			// fflush(file);//而且为什么加了这个后面没办法再调用这个函数了？
+			goto Exist;
+		}
+				// default:
+					// return;//break;//艹这个break只是出了switch……
+		}
+	}
+Exist:
+	fflush(file);//这个并不能即时写入……
+	//！！！！但是这个是有用的！！！没有这个就莫名其妙把前面的复制下来了！！！
+	//妈耶机缘巧合哈哈不想细究了/汗
+	// fclose(file);
+	return;
+
+}
+// void newWriteIni(FILE* file, int data)
 int main(void)
 {
 	FILE* file = NULL;
+	char tempChar = 0;
+	int year, month, day, hour, min, sec;
+	struct tm* nowTime;
+	// int* inputData = NULL;
 
-	if ((file = fopen("D:/Code/Code-C/C Test/Config.ini", "w+")) == NULL) { perror("无法打开文件"); return 1; }
-	ReadINI(file);
+	if ((file = fopen("D:/Code/Code-C/C Test/Others/Config.ini", "r+")) == NULL) { perror("无法打开文件"); return 1; }
+
+	// //测试一下两种方法的速度
+	// fseek(file, dV1, SEEK_SET);
+	// setLineBegin(file, dV2);
+
+	readIni(file, &year);
+	readIni(file, &month);
+	readIni(file, &day);
+	readIni(file, &hour);
+	readIni(file, &min);
+	readIni(file, &sec);
+	//啊忘记啦！！使用实参其实很容易的！！！
+	printf("Last time opened:\n%d-%02d-%02d %02d:%02d:%02d\n", year, month, day, hour, min, sec);
+
+	time_t timer = time(NULL);
+	nowTime = localtime(&timer);//喵的烦死了艹//而且注意这个函数返回的是tm*!!!!
+	year = nowTime->tm_year + 1900;month = nowTime->tm_mon + 1;day = nowTime->tm_mday;hour = nowTime->tm_hour;min = nowTime->tm_min;sec = nowTime->tm_sec;
+	//艹之前那次怎么是用的*结构体啊?区分这两个调用的语法!
+	// fseek(file, 0, SEEK_SET);
+	rewind(file);
+	rewriteIni(file, year);//是喔，就算写入了，数字不同估计它也会把后面的改掉的吧！
+	rewriteIni(file, month);
+	rewriteIni(file, day);
+	rewriteIni(file, hour);
+	rewriteIni(file, min);
+	rewriteIni(file, sec);
+	// fprintf(file, "RewriteTest");//这个又行？？？？？？？？
+
+	// fseek(file, 0, SEEK_SET);//注意读完一次记得指针回头啊!!!
+	rewind(file);//你明明可以用更简单的
+	readIni(file, &year);
+	readIni(file, &month);
+	readIni(file, &day);
+	readIni(file, &hour);
+	readIni(file, &min);
+	readIni(file, &sec);
+	printf("For now:\n%d-%02d-%02d %02d:%02d:%02d\n", year, month, day, hour, min, sec);
+
 	fclose(file);
-	printf("%04d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, min, sec);
+	// system("pause");
+	// main();
 	return 0;
 }
+//EOF 2023-11-11 11:43 艹
+//EOF 2023-11-11 13:58//成了！！！！成了家人们！！！居然要先一个fseek才能写入！！！
+
+
+//PT 2023-11-11 11:45
+//About:关于文件覆写的问题,是函数的问题吗？
+// #include<stdio.h>
+// #include<string.h>
+// static int times = 0;
+// void write(FILE* file, char* content)
+// {
+// 	fseek(file, 0, SEEK_SET);
+// 	if (times == 0)
+// 	{
+// 		times = 1;
+// 		fprintf(file, "%s", content);
+// 		// fwrite(content, sizeof(char), sizeof(content) / sizeof(char), file);
+// 	}
+// 	else
+// 	{
+// 		times = 0;
+// 		// content = "RewriteFileTest";
+// 		//注意不能直接给字符串赋值!要用strcpy!!!
+// 		strcpy(content, "RewriteFileTest\n");
+// 		fprintf(file, "%s", content);
+// 		// fwrite(content, sizeof(char), sizeof(content) / sizeof(char), file);
+
+// 	}
+
+// }
+// int main(void)
+// {
+// 	FILE* file = NULL;
+// 	char content[20] = "Woisol\n";
+
+// 	if ((file = fopen("D:/Code/Code-C/C Test/Others/RewriteFileTest.txt", "r+")) == NULL) { perror("无法打开文件"); }
+// 	//OK果然出问题最好还是提取出来专门debug一下……
+// 	//a+和r+的区别在于前者是“add”只能补加不能修改原有的！
+// 	//w+的话就是全部删掉重新写过了
+// 	write(file, content);
+// 	fclose(file);
+// 	main();
+// 	return 0;
+// }
