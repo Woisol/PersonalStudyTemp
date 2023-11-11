@@ -915,45 +915,55 @@
 //About:暴力解析ini文
 #include<stdio.h>
 char temp = 0;
+char year = 0, month = 0, day = 0, hour = 0, min = 0, sec = 0;
 
-inline char ReadINI(FILE* file, char* Obj)
+inline void ReadSkip(FILE* file)
 {
+	do
+	{
+		temp = fgetc(file);
+
+	} while (temp != '\n');//这里究竟应该把判断放在哪呢？好像前后都一样？
+	//注意末尾的while要用;!!!
+}
+// inline void ReadObj(FILE* file)//C传递数组可以用指针也可以用[]但是注意不会检查边界！
+// {
+// 	// char objectReaded[10];
+// 	fscanf(file, "%[^=]", &objectReaded);
+// 	// return objectReaded;//这里明显重复不必要定义了，直接修改全局变量即可
+// }
+// inline void ReadNum(FILE* file,char * numReaded)
+// {
+// 	fscanf(file, "%d", &numReaded);
+// }
+inline char ReadINI(FILE* file)
+{
+	char ObjReaded[10];
 	while (1)
 	{
 		temp = fgetc(file);
 		switch (temp)
 		{
 		case'[':
-		case'#':ReadSkip();break;
+		case'#':ReadSkip(file);break;
 		case'\n':continue;
-		default:			//switch(ReadObj())//这里如果想用switch可以考虑用枚举这里不改了
+		default:fscanf(file, "%[^=]", &ObjReaded);fgetc(file);
+			if (ObjReaded == "year") { fscanf(file, "%d", &year); }			//switch(ReadObj())//这里如果想用switch可以考虑用枚举这里不改了
+			else if (ObjReaded == "month") { fscanf(file, "%d", &month); }
+			else if (ObjReaded == "day") { fscanf(file, "%d", &day); }
+			else if (ObjReaded == "hour") { fscanf(file, "%d", &hour); }
+			else if (ObjReaded == "min") { fscanf(file, "%d", &min); }
+			else if (ObjReaded == "sec") { fscanf(file, "%d", &sec); }
 		}
 	}
-}
-inline void ReadSkip(FILE* file)
-{
-	do
-	{
-		temp = fgetchar(file);
-
-	} while (temp != '\n')//这里究竟应该把判断放在哪呢？好像前后都一样？
-}
-inline char ReadObj(FILE* file)//C传递数组可以用指针也可以用[]但是注意不会检查边界！
-{
-	char objectReaded[10] = 0;
-	fscanf(file, "&s", &objectReaded);
-	return objectReaded;
 }
 int main(void)
 {
 	FILE* file = NULL;
-	char year = 0, month = 0, day = 0, hour = 0, min = 0, sec = 0;
 
 	if ((file = fopen("D:/Code/Code-C/C Test/Config.ini", "w+")) == NULL) { perror("无法打开文件"); return 1; }
-	while (1)
-	{
-
-	}
+	ReadINI(file);
 	fclose(file);
+	printf("%04d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, min, sec);
 	return 0;
 }
