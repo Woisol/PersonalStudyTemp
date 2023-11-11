@@ -116,8 +116,8 @@ int main(void)
 				// cleardevice();//不过用这个感觉会有点卡顿
 				// egeDrawRoundRec(slideBar.x, slideBar.y, slideBar.width, slideBar.height, slideBar.radius, LIGHTGRAY);
 				// egeDrawRoundRec(slideBar.x, slideBar.y, slideBar.value, slideBar.height, slideBar.radius, DARKGRAY);
-				egeDrawSlideBar(&slideBar)
-					mmsg = getmouse();//这种内部循环的一定注意更新数据！
+				egeDrawSlideBar(&slideBar);
+				mmsg = getmouse();//这种内部循环的一定注意更新数据！
 
 				setfillcolor(WHITE);
 				ege_fillrect(260, 280, 80, 40);
