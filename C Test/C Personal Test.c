@@ -1024,164 +1024,166 @@
 //BOF 2023-11-11
 //PT 2023-11-11 08:48
 //About:暴力解析ini文件：改进scanf&增加写入功能！（NOT）
-#include<stdio.h>
-// #include<stdlib.h>
-#include<time.h>
-#include<windows.h>
-char  dV1 = 50, dV2 = 2;
-int oW = 0;//oW不要轻易设char，unsigned的话只有127……
+// #include<stdio.h>
+// // #include<stdlib.h>
+// #include<time.h>
+// #include<windows.h>
+// char  dV1 = 50, dV2 = 2;
+// int oW = 0;//oW不要轻易设char，unsigned的话只有127……
 
-void setLineBegin(FILE* file, int dV2)
-{
-	// clock_t originalTime = 0, difTime = 0.0;
-	// originalTime = clock();
-	// if (dV2 == 2) { goto Way2; }
-	// while (1)
-	// {
-	// 	oW = ftell(file);
-	// 	fseek(file, -2, SEEK_CUR);
-	// 	if (fgetc(file) == '\n') { break; }
-	// 	//在想有没有可能改进一下……
-	// }
-	// goto Count;
-	// exit();//这个函数必须要有stdlib.h才能用！
+// void setLineBegin(FILE* file, int dV2)
+// {
+// 	// clock_t originalTime = 0, difTime = 0.0;
+// 	// originalTime = clock();
+// 	// if (dV2 == 2) { goto Way2; }
+// 	// while (1)
+// 	// {
+// 	// 	oW = ftell(file);
+// 	// 	fseek(file, -2, SEEK_CUR);
+// 	// 	if (fgetc(file) == '\n') { break; }
+// 	// 	//在想有没有可能改进一下……
+// 	// }
+// 	// goto Count;
+// 	// exit();//这个函数必须要有stdlib.h才能用！
 
-	//新方法
-	//其实考虑到fseek可能也是一个个退回去的吧，那这样效率其实差别不大？
-Way2:
-	fseek(file, -10, SEEK_CUR);
-	for (int t = 0;t < 11;t++)
-	{
-		oW = ftell(file);
-		if (fgetc(file) == '\n') { fseek(file, -3, SEEK_CUR); break; }
-	}
-	while (1)
-	{
-		fseek(file, -20, SEEK_CUR);
-		for (int t = 0;t < 10; t++)
-		{
-			oW = ftell(file);
-			if (fgetc(file) == '\n') { goto Count; }//！！！注意break不能通过多用跳出嵌套循环！！！！！！！
-		}
-	}
-Count:
-	// // difTime = clock() - originalTime;// / CLOCKS_PER_SEC / 1000
-	// //艹注意调试是会影响clock的………………
-	// printf("%ld\n", difTime);
-	return;//!!!void也是可以return的！
-}
-void nextLine(FILE* file)
-{
-	while (1)
-	{
-		if (fgetc(file) == '\n') { break; }
-	}
-}
-void readIni(FILE* file, int* data)
-{
-	char tempChar = 0;
-	while (1)
-	{
-		oW = tempChar = fgetc(file);
-		switch (tempChar)
-		{
-		case '[':
-		case '#':nextLine(file);
-		case '\n':continue;
-		default:
-			fscanf(file, "%*s = %d", data);return;//break;//艹这个break只是出了switch……
-		}
-	}
-}
-void rewriteIni(FILE* file, int data)
-{
-	char tempChar = 0;
-	// fseek(file, 220, SEEK_SET);
-	// fprintf(file, "Rewrite");//这样又得？？？？然后而且居然没有覆盖下一行！
-	while (1)
-	{
-		tempChar = fgetc(file);
-		switch (tempChar)
-		{
-		case '[':
-		case '#':nextLine(file);
-		case '\n':oW = ftell(file);continue;
-		case ' ':if (fgetc(file) == '=' && fgetc(file) == ' ')
-		{
-			fseek(file, oW = ftell(file), SEEK_SET);
-			fprintf(file, "%d", data);
-			// oW = ftell(file);
-			// fprintf(file, "Rewrite");
-			// fwrite(&data, sizeof(int), sizeof(data) / sizeof(int), file);
-			//为什么就是写不进去……………………测试都行的………………
-			// fflush(file);//而且为什么加了这个后面没办法再调用这个函数了？
-			goto Exist;
-		}
-				// default:
-					// return;//break;//艹这个break只是出了switch……
-		}
-	}
-Exist:
-	fflush(file);//这个并不能即时写入……
-	//！！！！但是这个是有用的！！！没有这个就莫名其妙把前面的复制下来了！！！
-	//妈耶机缘巧合哈哈不想细究了/汗
-	// fclose(file);
-	return;
+// 	//新方法
+// 	//其实考虑到fseek可能也是一个个退回去的吧，那这样效率其实差别不大？
+// Way2:
+// 	fseek(file, -10, SEEK_CUR);
+// 	for (int t = 0;t < 11;t++)
+// 	{
+// 		oW = ftell(file);
+// 		if (fgetc(file) == '\n') { fseek(file, -3, SEEK_CUR); break; }
+// 	}
+// 	while (1)
+// 	{
+// 		fseek(file, -20, SEEK_CUR);
+// 		for (int t = 0;t < 10; t++)
+// 		{
+// 			oW = ftell(file);
+// 			if (fgetc(file) == '\n') { goto Count; }//！！！注意break不能通过多用跳出嵌套循环！！！！！！！
+// 		}
+// 	}
+// Count:
+// 	// // difTime = clock() - originalTime;// / CLOCKS_PER_SEC / 1000
+// 	// //艹注意调试是会影响clock的………………
+// 	// printf("%ld\n", difTime);
+// 	return;//!!!void也是可以return的！
+// }
+// void nextLine(FILE* file)
+// {
+// 	while (1)
+// 	{
+// 		if (fgetc(file) == '\n') { break; }
+// 	}
+// }
+// void readIni(FILE* file, int* data)
+// {
+// 	char tempChar = 0;
+// 	while (1)
+// 	{
+// 		oW = tempChar = fgetc(file);
+// 		switch (tempChar)
+// 		{
+// 		case '[':
+// 		case '#':nextLine(file);
+// 		case '\n':continue;
+// 		default:
+// 			fscanf(file, "%*s = %d", data);return;//break;//艹这个break只是出了switch……
+// 		}
+// 	}
+// }
+// void rewriteIni(FILE* file, int data)
+// {
+// 	char tempChar = 0;
+// 	// fseek(file, 220, SEEK_SET);
+// 	// fprintf(file, "Rewrite");//这样又得？？？？然后而且居然没有覆盖下一行！
+// 	while (1)
+// 	{
+// 		tempChar = fgetc(file);
+// 		switch (tempChar)
+// 		{
+// 		case '[':
+// 		case '#':nextLine(file);
+// 		case '\n':oW = ftell(file);continue;
+// 		case ' ':if (fgetc(file) == '=' && fgetc(file) == ' ')
+// 		{
+// 			fseek(file, oW = ftell(file), SEEK_SET);
+// 			fprintf(file, "%d", data);
+// 			// oW = ftell(file);
+// 			// fprintf(file, "Rewrite");
+// 			// fwrite(&data, sizeof(int), sizeof(data) / sizeof(int), file);
+// 			//为什么就是写不进去……………………测试都行的………………
+// 			// fflush(file);//而且为什么加了这个后面没办法再调用这个函数了？
+// 			goto Exit;
+// 		}
+// 				// default:
+// 					// return;//break;//艹这个break只是出了switch……
+// 		// }break;
+// 		}
+// 	}
+// Exit://为什么？？？为什么只能用标签退出？？？
+// 	//悟了，依旧是switch的问题，在这里面continue只是跳出switch，但是接下来就break了……
+// 	fflush(file);//这个并不能即时写入……
+// 	//！！！！但是这个是有用的！！！没有这个就莫名其妙把前面的复制下来了！！！
+// 	//妈耶机缘巧合哈哈不想细究了/汗
+// 	// fclose(file);
+// 	return;
+// 	//真的，能跑就行，刚刚又想改不用goto，然后发现改了不对再改回来就是各种{}的bug了…………
+// }
+// // void newWriteIni(FILE* file, int data)
+// int main(void)
+// {
+// 	FILE* file = NULL;
+// 	char tempChar = 0;
+// 	int year, month, day, hour, min, sec;
+// 	struct tm* nowTime;
+// 	// int* inputData = NULL;
 
-}
-// void newWriteIni(FILE* file, int data)
-int main(void)
-{
-	FILE* file = NULL;
-	char tempChar = 0;
-	int year, month, day, hour, min, sec;
-	struct tm* nowTime;
-	// int* inputData = NULL;
+// 	if ((file = fopen("D:/Code/Code-C/C Test/Others/Config.ini", "r+")) == NULL) { perror("无法打开文件"); return 1; }
 
-	if ((file = fopen("D:/Code/Code-C/C Test/Others/Config.ini", "r+")) == NULL) { perror("无法打开文件"); return 1; }
+// 	// //测试一下两种方法的速度
+// 	// fseek(file, dV1, SEEK_SET);
+// 	// setLineBegin(file, dV2);
 
-	// //测试一下两种方法的速度
-	// fseek(file, dV1, SEEK_SET);
-	// setLineBegin(file, dV2);
+// 	readIni(file, &year);
+// 	readIni(file, &month);
+// 	readIni(file, &day);
+// 	readIni(file, &hour);
+// 	readIni(file, &min);
+// 	readIni(file, &sec);
+// 	//啊忘记啦！！使用实参其实很容易的！！！
+// 	printf("Last time opened:\n%d-%02d-%02d %02d:%02d:%02d\n", year, month, day, hour, min, sec);
 
-	readIni(file, &year);
-	readIni(file, &month);
-	readIni(file, &day);
-	readIni(file, &hour);
-	readIni(file, &min);
-	readIni(file, &sec);
-	//啊忘记啦！！使用实参其实很容易的！！！
-	printf("Last time opened:\n%d-%02d-%02d %02d:%02d:%02d\n", year, month, day, hour, min, sec);
+// 	time_t timer = time(NULL);
+// 	nowTime = localtime(&timer);//喵的烦死了艹//而且注意这个函数返回的是tm*!!!!
+// 	year = nowTime->tm_year + 1900;month = nowTime->tm_mon + 1;day = nowTime->tm_mday;hour = nowTime->tm_hour;min = nowTime->tm_min;sec = nowTime->tm_sec;
+// 	//艹之前那次怎么是用的*结构体啊?区分这两个调用的语法!
+// 	// fseek(file, 0, SEEK_SET);
+// 	rewind(file);
+// 	rewriteIni(file, year);//是喔，就算写入了，数字不同估计它也会把后面的改掉的吧！
+// 	rewriteIni(file, month);
+// 	rewriteIni(file, day);
+// 	rewriteIni(file, hour);
+// 	rewriteIni(file, min);
+// 	rewriteIni(file, sec);
+// 	// fprintf(file, "RewriteTest");//这个又行？？？？？？？？
 
-	time_t timer = time(NULL);
-	nowTime = localtime(&timer);//喵的烦死了艹//而且注意这个函数返回的是tm*!!!!
-	year = nowTime->tm_year + 1900;month = nowTime->tm_mon + 1;day = nowTime->tm_mday;hour = nowTime->tm_hour;min = nowTime->tm_min;sec = nowTime->tm_sec;
-	//艹之前那次怎么是用的*结构体啊?区分这两个调用的语法!
-	// fseek(file, 0, SEEK_SET);
-	rewind(file);
-	rewriteIni(file, year);//是喔，就算写入了，数字不同估计它也会把后面的改掉的吧！
-	rewriteIni(file, month);
-	rewriteIni(file, day);
-	rewriteIni(file, hour);
-	rewriteIni(file, min);
-	rewriteIni(file, sec);
-	// fprintf(file, "RewriteTest");//这个又行？？？？？？？？
+// 	// fseek(file, 0, SEEK_SET);//注意读完一次记得指针回头啊!!!
+// 	rewind(file);//你明明可以用更简单的
+// 	readIni(file, &year);
+// 	readIni(file, &month);
+// 	readIni(file, &day);
+// 	readIni(file, &hour);
+// 	readIni(file, &min);
+// 	readIni(file, &sec);
+// 	printf("For now:\n%d-%02d-%02d %02d:%02d:%02d\n", year, month, day, hour, min, sec);
 
-	// fseek(file, 0, SEEK_SET);//注意读完一次记得指针回头啊!!!
-	rewind(file);//你明明可以用更简单的
-	readIni(file, &year);
-	readIni(file, &month);
-	readIni(file, &day);
-	readIni(file, &hour);
-	readIni(file, &min);
-	readIni(file, &sec);
-	printf("For now:\n%d-%02d-%02d %02d:%02d:%02d\n", year, month, day, hour, min, sec);
-
-	fclose(file);
-	// system("pause");
-	// main();
-	return 0;
-}
+// 	fclose(file);
+// 	// system("pause");
+// 	// main();
+// 	return 0;
+// }
 //EOF 2023-11-11 11:43 艹
 //EOF 2023-11-11 13:58//成了！！！！成了家人们！！！居然要先一个fseek才能写入！！！
 
