@@ -1,3 +1,5 @@
+//PT 2023-11-12 21:04
+//About:更新了按钮和输入框的事件
 //主要参考了https://blog.csdn.net/qq_39151563/article/details/114607800
 // #define RoundRectButton 0
 #include<graphics.h>
@@ -9,13 +11,14 @@
 #define FPS 120
 
 /*----------------------------结构体-----------------------------------------------------*/
-struct RoundRectButton
+struct Button
 {
 	int x, y;
 	int width, height;
 	double radius;
-}
-button;
+	int timerHover = 0;
+};
+
 struct SlideBar
 {
 	int x, y;
@@ -23,16 +26,27 @@ struct SlideBar
 	double radius;
 	int value;
 	bool isVertical;
-}slideBar;
+};
+struct InputBox
+{
+	int x, y;
+	int width, height;
+	double radius;
+	char content[150] = { 0 };
+};
+struct MsgBox
+{
+	int x, y;
+	int width, height;
+	double radius;
+	char content[150] = { 0 };
+};
 
 /*----------------------------窗口类-----------------------------------------------------*/
-void egeWindowInition(const char* caption, const int winWidth, const int winHeight, bool debug = 0)
+void egeWindowInition(const char* caption, const int winWidth, const int winHeight, const int x, const int y, bool debug = 0)
 {
-	setinitmode(INIT_NOFORCEEXIT);
-	if (debug == 0)
-	{
-		setinitmode(INIT_RENDERMANUAL);
-	}
+	if (debug == 0) { setinitmode(INIT_RENDERMANUAL, x, y); }
+	else { setinitmode(INIT_NOFORCEEXIT, x, y); }
 	setcaption(caption);
 	initgraph(winWidth, winHeight, 0); // 这个0是用来加入ege自己的开场动画的，为1时在debug时无在release时有
 	setbkcolor(WHITE);								   // 注意这个是在initgraph之后搞的！
@@ -83,7 +97,7 @@ void egeDrawRoundRec(int x, int y, int width, int height, double radius, color_t
 }
 
 /*----------------------------按钮类-----------------------------------------------------*/
-void egeInitRoundRectButton(struct RoundRectButton* button, int x, int y, int width, int height, double radius)
+void egeInitButton(struct Button* button, int x, int y, int width, int height, double radius)
 {
 	button->x = x;
 	button->y = y;
@@ -91,7 +105,7 @@ void egeInitRoundRectButton(struct RoundRectButton* button, int x, int y, int wi
 	button->height = height;
 	button->radius = radius;//md又犯了传形参的错误……
 }
-void egeDrawButton(const RoundRectButton* button, color_t color, wchar_t title[])
+void egeDrawButton(const Button* button, color_t color, wchar_t title[])
 {
 	egeDrawRoundRec(button->x, button->y, button->width, button->height, button->radius, color);
 
@@ -100,9 +114,12 @@ void egeDrawButton(const RoundRectButton* button, color_t color, wchar_t title[]
 	outtextxy(button->x + button->width / 2, button->y + button->height / 2, title);
 	setbkcolor(WHITE);
 	// delay_fps(0);
+		//这里大改了，原本还要在这里再次定义颜色和title的
+	//艹乱改，改了就无法悬浮了………………人家官方这样做是有道理的！
+
 }
 
-bool egeIsInsideRoundRectButton(const RoundRectButton* button, int x, int y)
+bool egeIsInsideButton(const Button* button, int x, int y)
 {
 	bool inside = false;
 
@@ -134,6 +151,28 @@ bool egeIsInsideRoundRectButton(const RoundRectButton* button, int x, int y)
 
 	return inside;
 }
+void egeButtonEffect(const Button* button, mouse_msg* mmsg, wchar_t* originalTitle, wchar_t* pressedTitle, color_t originalColor, color_t hoveredColor, void(*pressedFunction)())
+{
+	if (!egeIsInsideButton(button, mmsg->x, mmsg->y) && button->timerHover == 0)
+	{
+		egeDrawButton(button, originalColor, originalTitle);
+		// delay_ms(0);
+	}
+	// while (mousemsg() && is_run())
+	// {
+	// 	*mmsg = getmouse();//定位了问题，在于getmouse会读掉现有的本应给另一个按钮的消息，而且似乎没有消息会让mmsg的xy清零！
+	if (egeIsInsideButton(button, mmsg->x, mmsg->y))
+	{
+		egeDrawButton(button, hoveredColor, pressedTitle);
+		// delay_ms(0);
+		if (mmsg->is_left() && mmsg->is_down())
+		{
+			pressedFunction();
+		}
+	}
+	// }
+	// delay_ms(0);//减少刷新，但是是必要的。
+}
 /*----------------------------滑块类-----------------------------------------------------*/
 
 void egeInitSlideBar(struct SlideBar* slideBar, int x, int y, int width, int height, double radius, bool isVertical = 0, int defaultValue = 10)
@@ -161,4 +200,54 @@ bool egeIsInsideSlidBar(struct SlideBar* slideBar, int x, int y)
 		return true;
 	}
 	return false;
+}
+/*----------------------------输入框类-----------------------------------------------------*/
+void egeInitInputBox(struct InputBox* inputBox, int x, int y, int width, int height, double radius)
+{
+	inputBox->x = x;
+	inputBox->y = y;
+	inputBox->width = width;
+	inputBox->height = height;
+	inputBox->radius = radius;
+	// inputBox->content = { 0 };//数组这样初始化只能在定义的时候！
+}
+void egeDrawInputBox(struct InputBox* inputBox)
+{
+	setfillcolor(WHITE);
+	ege_fillrect(inputBox->x, inputBox->y, inputBox->width, inputBox->height);
+	egeDrawRoundRec(inputBox->x, inputBox->y, inputBox->width, inputBox->height, inputBox->radius, EGERGB(240, 240, 240));
+	rectprintf(inputBox->x + inputBox->radius, inputBox->y + inputBox->radius, inputBox->width - inputBox->radius, inputBox->height - inputBox->radius, "%s", inputBox->content);
+}
+void egeInputBoxEffect(struct InputBox* inputBox)
+{
+	static char tempString[2] = { 0 };
+	// while (kbmsg() && is_run())
+	{
+		tempString[0] = getch();
+		// flushkey();
+		switch (tempString[0])
+		{
+		case key_back:inputBox->content[strlen(inputBox->content) - 1] = '\0';break;
+		default:strcat(inputBox->content, tempString);//, 150 - sizeof(inputBox.content)
+		}
+	}
+	egeDrawInputBox(inputBox);
+
+}
+
+/*----------------------------文本框类-----------------------------------------------------*/
+void egeInitMsgBox(struct MsgBox* msgBox, int x, int y, int width, int height, double radius)
+{
+	msgBox->x = x;
+	msgBox->y = y;
+	msgBox->width = width;
+	msgBox->height = height;
+	msgBox->radius = radius;
+}
+void egeDrawMsgBox(struct MsgBox* msgBox)
+{
+	setfillcolor(WHITE);
+	ege_fillrect(msgBox->x, msgBox->y, msgBox->width, msgBox->height);
+	egeDrawRoundRec(msgBox->x, msgBox->y, msgBox->width, msgBox->height, msgBox->radius, EGERGB(240, 240, 240));
+	rectprintf(msgBox->x + msgBox->radius, msgBox->y + msgBox->radius, msgBox->width - msgBox->radius, msgBox->height - msgBox->radius, "%s", msgBox->content);
 }

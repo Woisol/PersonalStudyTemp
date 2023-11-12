@@ -1228,3 +1228,23 @@
 // 	main();
 // 	return 0;
 // }
+
+//##################################################################################
+//PT 2023-11-12 18:05
+//About:传递函数？？？
+#include<stdio.h>
+int getData(void)
+{
+	return 1;
+}
+int add(int(*getData)())
+{
+	int a = getData();
+	return ++a;
+}
+int main(void)
+{
+	printf("%d", add(getData));
+	return 0;
+}
+//woq居然支持得这么好，好像都没听那个教程讲过呀艹
