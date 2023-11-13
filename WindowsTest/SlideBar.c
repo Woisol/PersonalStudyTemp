@@ -78,6 +78,7 @@ int main(void)
 		}
 
 	}
+	closegraph();
 	return 0;
 }
 //EOF 2023-11-11 19:45：！！！！！完美实现目标！！！超好看！！！

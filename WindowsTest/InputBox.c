@@ -36,6 +36,7 @@ int main(void)
 		}
 		egeDrawInputBox(&inputBox);
 	}
+	closegraph();
 	return 0;
 }
 //EOF 2023-11-11 22:26：！！！！得啦！！！完美运行！！！

@@ -50,7 +50,7 @@ int main(void)
 		}
 
 	}
-	closegraph();
+	closegraph();//嗯之前关掉窗口不退出就是在于这里…………
 	return 0;
 }
 //EOF 2023-11-11 17:07：好耶实现了生成按钮，按下事件以及悬浮事件！！！

@@ -1,9 +1,4 @@
-//PT 2023-11-12 21:04
-//About:更新了按钮和输入框的事件
-//主要参考了https://blog.csdn.net/qq_39151563/article/details/114607800
-// #define RoundRectButton 0
 #include<graphics.h>
-// #include<conio.h>
 #include<stdbool.h>
 #include<math.h>
 
@@ -49,11 +44,11 @@ void egeWindowInition(const char* caption, const int winWidth, const int winHeig
 	if (debug == 0) { setinitmode(INIT_RENDERMANUAL, x, y); }
 	else { setinitmode(INIT_NOFORCEEXIT, x, y); }
 	setcaption(caption);
-	initgraph(winWidth, winHeight, 0); // 这个0是用来加入ege自己的开场动画的，为1时在debug时无在release时有
-	setbkcolor(WHITE);								   // 注意这个是在initgraph之后搞的！
+	initgraph(winWidth, winHeight, 0);
+	setbkcolor(WHITE);
 
-	setcolor(BLACK);//不设置的话默认是浅灰欸
-	setbkmode(TRANSPARENT);//艹又是莫名其妙哈哈加了这个后面的文字背景就透明了
+	setcolor(BLACK);
+	setbkmode(TRANSPARENT);
 }
 
 /*----------------------------画图类-----------------------------------------------------*/
@@ -81,20 +76,17 @@ void egeDrawRoundRec(int x, int y, int width, int height, double radius, color_t
 		(double)(y + radius),
 		(double)(radius), (double)(height - 2 * radius)
 	);
-	// delay_fps(0);
 
 
 	double diameter = 2 * radius;
 	double dx = width - diameter;
 	double dy = height - diameter;
-	// delay_fps(0);
 
 
 	ege_fillpie((double)(x + dx), (double)(y + dy), diameter, diameter, 0.0f, 90.0f);
 	ege_fillpie((double)(x), (double)(y + dy), diameter, diameter, 90.0f, 90.0f);
 	ege_fillpie((double)(x), (double)(y), diameter, diameter, 180.0f, 90.0f);
 	ege_fillpie((double)(x + dx), (double)(y), diameter, diameter, 270.0f, 90.0f);
-	//这里的作图思路是先填充上下和中间的矩形，到两边的矩形，最后才填充圆。
 }
 
 /*----------------------------按钮类-----------------------------------------------------*/
@@ -104,7 +96,7 @@ void egeInitButton(struct Button* button, int x, int y, int width, int height, d
 	button->y = y;
 	button->width = width;
 	button->height = height;
-	button->radius = radius;//md又犯了传形参的错误……
+	button->radius = radius;
 }
 void egeDrawButton(const Button* button, color_t color, wchar_t title[])
 {
@@ -114,10 +106,6 @@ void egeDrawButton(const Button* button, color_t color, wchar_t title[])
 	setbkcolor(TRANSPARENT);
 	outtextxy(button->x + button->width / 2, button->y + button->height / 2, title);
 	setbkcolor(WHITE);
-	// delay_fps(0);
-		//这里大改了，原本还要在这里再次定义颜色和title的
-	//艹乱改，改了就无法悬浮了………………人家官方这样做是有道理的！
-
 }
 
 bool egeIsInsideButton(const Button* button, int x, int y)
@@ -157,22 +145,16 @@ void egeButtonEffect(const Button* button, mouse_msg* mmsg, wchar_t* originalTit
 	if (!egeIsInsideButton(button, mmsg->x, mmsg->y) && button->timerHover == 0)
 	{
 		egeDrawButton(button, originalColor, originalTitle);
-		// delay_ms(0);
 	}
-	// while (mousemsg() && is_run())
-	// {
-	// 	*mmsg = getmouse();//定位了问题，在于getmouse会读掉现有的本应给另一个按钮的消息，而且似乎没有消息会让mmsg的xy清零！
 	if (egeIsInsideButton(button, mmsg->x, mmsg->y))
 	{
 		egeDrawButton(button, hoveredColor, pressedTitle);
-		// delay_ms(0);
 		if (mmsg->is_left() && mmsg->is_down())
 		{
 			pressedFunction();
 		}
 	}
 	// }
-	// delay_ms(0);//减少刷新，但是是必要的。
 }
 /*----------------------------滑块类-----------------------------------------------------*/
 
@@ -182,7 +164,7 @@ void egeInitSlideBar(struct SlideBar* slideBar, int x, int y, int width, int hei
 	slideBar->y = y;
 	slideBar->width = width;
 	slideBar->height = height;
-	slideBar->radius = radius;//md又犯了传形参的错误……
+	slideBar->radius = radius;
 	slideBar->isVertical = isVertical;
 	slideBar->value = defaultValue;
 }
@@ -210,7 +192,6 @@ void egeInitInputBox(struct InputBox* inputBox, int x, int y, int width, int hei
 	inputBox->width = width;
 	inputBox->height = height;
 	inputBox->radius = radius;
-	// inputBox->content = { 0 };//数组这样初始化只能在定义的时候！
 }
 void egeDrawInputBox(struct InputBox* inputBox)
 {
@@ -222,16 +203,14 @@ void egeDrawInputBox(struct InputBox* inputBox)
 void egeInputBoxEffect(struct InputBox* inputBox)
 {
 	static char tempString[2] = { 0 };
-	// while (kbmsg() && is_run())
 	if (kbhit())
 	{
 		tempString[0] = getch();
-		// flushkey();
 		switch (tempString[0])
 		{
 		case key_back:inputBox->content[strlen(inputBox->content) - 1] = '\0';break;
 		case key_enter:break;
-		default:strcat(inputBox->content, tempString);//, 150 - sizeof(inputBox.content)
+		default:strcat(inputBox->content, tempString);
 		}
 		egeDrawInputBox(inputBox);
 	}
