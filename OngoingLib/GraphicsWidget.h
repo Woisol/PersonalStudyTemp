@@ -174,34 +174,7 @@ void egeButtonEffect(const Button* button, mouse_msg* mmsg, wchar_t* originalTit
 	// }
 	// delay_ms(0);//减少刷新，但是是必要的。
 }
-/*----------------------------滑块类-----------------------------------------------------*/
 
-void egeInitSlideBar(struct SlideBar* slideBar, int x, int y, int width, int height, double radius, bool isVertical = 0, int defaultValue = 10)
-{
-	slideBar->x = x;
-	slideBar->y = y;
-	slideBar->width = width;
-	slideBar->height = height;
-	slideBar->radius = radius;//md又犯了传形参的错误……
-	slideBar->isVertical = isVertical;
-	slideBar->value = defaultValue;
-}
-void egeDrawSlideBar(struct SlideBar* slideBar)
-{
-	setfillcolor(WHITE);
-	ege_fillrect(slideBar->x - 10, slideBar->y, slideBar->width + 10, slideBar->height);
-	egeDrawRoundRec(slideBar->x, slideBar->y, slideBar->width, slideBar->height, slideBar->radius, LIGHTGRAY);
-	egeDrawRoundRec(slideBar->x, slideBar->y, slideBar->value, slideBar->height, slideBar->radius, DARKGRAY);
-
-}
-bool egeIsInsideSlidBar(struct SlideBar* slideBar, int x, int y)
-{
-	if (x > slideBar->x && x < slideBar->x + slideBar->width && y > slideBar->y && y < slideBar->y + slideBar->height)
-	{
-		return true;
-	}
-	return false;
-}
 /*----------------------------输入框类-----------------------------------------------------*/
 void egeInitInputBox(struct InputBox* inputBox, int x, int y, int width, int height, double radius)
 {
@@ -217,9 +190,10 @@ void egeDrawInputBox(struct InputBox* inputBox)
 	setfillcolor(WHITE);
 	ege_fillrect(inputBox->x, inputBox->y, inputBox->width, inputBox->height);
 	egeDrawRoundRec(inputBox->x, inputBox->y, inputBox->width, inputBox->height, inputBox->radius, EGERGB(240, 240, 240));
-	rectprintf(inputBox->x + inputBox->radius, inputBox->y + inputBox->radius, inputBox->width - inputBox->radius, inputBox->height - inputBox->radius, "%s", inputBox->content);
+	settextjustify(LEFT_TEXT, TOP_TEXT);
+	rectprintf(inputBox->x + inputBox->radius, inputBox->y + inputBox->radius, inputBox->width - 2 * inputBox->radius, inputBox->height - 2 * inputBox->radius, "%s", inputBox->content);
 }
-void egeInputBoxEffect(struct InputBox* inputBox)
+void egeInputBoxEffect(struct InputBox* inputBox, void(*newMain)(), void (*clearButtonEffect)())
 {
 	static char tempString[2] = { 0 };
 	// while (kbmsg() && is_run())
@@ -230,10 +204,10 @@ void egeInputBoxEffect(struct InputBox* inputBox)
 		switch (tempString[0])
 		{
 		case key_back:inputBox->content[strlen(inputBox->content) - 1] = '\0';break;
-		case key_enter:break;
+		case key_enter:newMain();break;
+		case key_esc:clearButtonEffect();break;
 		default:strcat(inputBox->content, tempString);//, 150 - sizeof(inputBox.content)
 		}
-		egeDrawInputBox(inputBox);
 	}
 
 }
@@ -254,3 +228,53 @@ void egeDrawMsgBox(struct MsgBox* msgBox)
 	egeDrawRoundRec(msgBox->x, msgBox->y, msgBox->width, msgBox->height, msgBox->radius, EGERGB(240, 240, 240));
 	rectprintf(msgBox->x + msgBox->radius, msgBox->y + msgBox->radius, msgBox->width - msgBox->radius, msgBox->height - msgBox->radius, "%s", msgBox->content);
 }
+
+/*----------------------------滑块类-----------------------------------------------------*/
+
+void egeInitSlideBar(struct SlideBar* slideBar, int x, int y, int width, int height, double radius, bool isVertical = 0, int defaultValue = 10)
+{
+	slideBar->x = x;
+	slideBar->y = y;
+	slideBar->width = width;
+	slideBar->height = height;
+	slideBar->radius = radius;//md又犯了传形参的错误……
+	slideBar->isVertical = isVertical;
+	slideBar->value = defaultValue;
+}
+void egeDrawSlideBar(struct SlideBar* slideBar)
+{
+	setfillcolor(WHITE);
+	ege_fillrect(slideBar->x - 10, slideBar->y, slideBar->width + 10, slideBar->height);
+	egeDrawRoundRec(slideBar->x, slideBar->y, slideBar->width, slideBar->height, slideBar->radius, LIGHTGRAY);
+	egeDrawRoundRec(slideBar->x, slideBar->y, slideBar->value, slideBar->height, slideBar->radius, DARKGRAY);
+}
+bool egeIsInsideSlidBar(struct SlideBar* slideBar, int x, int y)
+{
+	if (x > slideBar->x && x < slideBar->x + slideBar->width && y > slideBar->y && y < slideBar->y + slideBar->height)
+	{
+		return true;
+	}
+	return false;
+}
+void egeSlideBarEffect(struct SlideBar* slideBar, char* output, mouse_msg* mmsg, struct InputBox* inputBox = NULL)
+//大补丁哈哈哈
+{
+	char tempString[10] = { 0 };
+	if (!(mmsg->is_left() && mmsg->is_down())) { return; }
+	mouse_msg immsg = getmouse();//被迫加了个内部另外的mmsg哈哈哈不过终于能跑啦！！！！
+	while (egeIsInsideSlidBar(slideBar, immsg.x, immsg.y))
+	{
+		slideBar->value = immsg.x - slideBar->x;
+		egeDrawRoundRec(slideBar->x, slideBar->y, slideBar->width, slideBar->height, slideBar->radius, LIGHTGRAY);
+		egeDrawRoundRec(slideBar->x, slideBar->y, slideBar->value, slideBar->height, slideBar->radius, DARKGRAY);
+		egeDrawSlideBar(slideBar);
+		immsg = getmouse();//这里如果不能在内部刷新的话就不要while了
+
+		itoa(slideBar->value, tempString, 10);
+		strcpy(output, tempString);
+		if (inputBox != NULL) { egeDrawInputBox(inputBox); delay_ms(0); }
+		if (immsg.is_left() && immsg.is_up()) { break; }
+	}
+}
+
+
