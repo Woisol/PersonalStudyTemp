@@ -27,8 +27,9 @@ int main(void)
 			// }
 			switch (oW = tempString[0])
 			{
-			case key_back:inputBox.content[strlen(inputBox.content) - 1] = '\0';break;
-				//strncpy(inputBox.content, inputBox.content, strlen(inputBox.content) - 1);break;//sizeof(inputBox.content) / sizeof(char) - 1！！！看过的！！！sizeof和strlen！！！
+			case key_back:if (strcmp(inputBox.content, "")) { inputBox.content[strlen(inputBox.content) - 1] = '\0'; }break;//发现问题了，如果把-1位置变成'\0'会修改到radius…………//这就是C不检查溢出的体现嘛……
+				//都说了字符串不要直接 == / ！=………………
+					//strncpy(inputBox.content, inputBox.content, strlen(inputBox.content) - 1);break;//sizeof(inputBox.content) / sizeof(char) - 1！！！看过的！！！sizeof和strlen！！！
 			default:strcat(inputBox.content, tempString);//, 150 - sizeof(inputBox.content)
 				//啊为什么唯独不运行这个函数？
 				//注意不建议使用strcat，防止溢出最好还是用strncat

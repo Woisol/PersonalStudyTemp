@@ -1,7 +1,7 @@
 //PT 2023-11-12 18:12
 //About:NoBlackWindows:先搞出窗体再搞其他吧你……
-#define NBWscanf(format,variable) sscanf(inputBox.content, format, variable);
-#define NBWprintf(format,variable) sprintf(msgBox.content, format, variable);//注意宏定义函数与普通函数不一样只是直接替换所以不用也不要写类型名！
+#define nscanf(format,variable) sscanf(inputBox.content, format, variable);
+#define nprintf(format,variable) sprintf(msgBox.content, format, variable);//注意宏定义函数与普通函数不一样只是直接替换所以不用也不要写类型名！
 //EOF 2023-11-13 13:47
 #include<stdio.h>
 #include"GraphicsWidget.h"
@@ -23,6 +23,7 @@ void confirmButtonEffect()
 void clearButtonEffect()
 {
 	strcpy(inputBox.content, "");
+	strcpy(msgBox.content, "");
 }
 void rebotButtonEffect(void(*newMain)())
 {
@@ -45,6 +46,7 @@ Rebot:
 	key_msg kbKey;
 
 	egeWindowInition("NoBlackWindows!", 1000, 800, 1000, 1000);
+	line(350, 40, 350, 650);
 	egeDrawInputBox(&inputBox);
 	egeDrawMsgBox(&msgBox);
 	egeDrawSlideBar(&slideBar);

@@ -102,23 +102,23 @@
 
 //PT 2023-11-12 23:34
 //About:与一般代码的兼容性测试
-#include"NoBlackWindows.h"
-void newMain(void)
-{
-	// FILE* file;
-	// // char Dir[50] = { 0 };
-	// // strcpy(Dir, "${workspaceFolder}/input.txt");printf("%s", Dir);
-	// if ((file = fopen(strcat(), "w")) == NULL) { perror("无法打开文件"); }
-	// fprintf(file, "%s\n", inputBox.content);
-	//woq傻了家人们，为什么要用文件传递啊？用字符串不行？！！
+// #include"NoBlackWindows.h"
+// void newMain(void)
+// {
+// 	// FILE* file;
+// 	// // char Dir[50] = { 0 };
+// 	// // strcpy(Dir, "${workspaceFolder}/input.txt");printf("%s", Dir);
+// 	// if ((file = fopen(strcat(), "w")) == NULL) { perror("无法打开文件"); }
+// 	// fprintf(file, "%s\n", inputBox.content);
+// 	//woq傻了家人们，为什么要用文件传递啊？用字符串不行？！！
 
-	int a = 0;
-	// sscanf(inputBox.content, "%d", &a);
-	// sprintf(msgBox.content, "%d", a);
-	NBWscanf("%d", &a);
-	NBWprintf("%d", a)
-}
-int main(void) { egeNoBlackWindows(newMain);return 0; }
+// 	int a = 0;
+// 	// sscanf(inputBox.content, "%d", &a);
+// 	// sprintf(msgBox.content, "%d", a);
+// 	NBWscanf("%d", &a);
+// 	NBWprintf("%d", a)
+// }
+// int main(void) { egeNoBlackWindows(newMain);return 0; }
 //先等等，现在为什么可以及时反应清屏了？？？诶诶真奇怪上面那次的代码就必须输入才能清屏，真奇怪
 //EOF 2023-11-13 00:06：不管了现在就差把数据输进stdin……看看什么情况睡了
 //EOF 2023-11-13 13:29：现在改成借由另一个文件输入又不能及时清屏了……
@@ -154,6 +154,22 @@ int main(void) { egeNoBlackWindows(newMain);return 0; }
 
 // }
 // int main(void) { egeNoBlackWindows(newMain);return 0; }
+
+//PT 2023-11-13 20:00
+//About:演示：阶乘
+// #include"NoBlackWindows.h"
+// void newMain(void)
+// {
+// 	int n = 0;
+// 	nscanf("%d", &n);
+// 	for (int t = n - 1;t > 1;t--)
+// 	{
+// 		n *= t;
+// 	}
+// 	nprintf("Factorial:%d", n);//艹不能有2个以上参数………………//不能输入中文
+// }
+// int main(void) { egeNoBlackWindows(newMain);return 0; }
+
 //PT 2023-11-13 13:35
 //About:关于获取文件路径……
 // #include<stdio.h>
@@ -162,3 +178,17 @@ int main(void) { egeNoBlackWindows(newMain);return 0; }
 // {
 // 	return 0;
 // }
+
+//PT 2023-11-13 20:11
+//About:关于获取文件路径
+// #include"NoBlackWindows.h"
+// #include<direct.h>
+// void newMain(void)
+// {
+// 	char CurrentWorkDirection[50] = { 0 };
+// 	getcwd(CurrentWorkDirection, sizeof(CurrentWorkDirection));
+// 	nprintf("%s", CurrentWorkDirection);
+// 	//花费大量资源去看一个路径/笑
+// 	//没错直接运行返回的是Code-C的位置，在Out运行就是Out，好用了~
+// }
+// int main(void) { egeNoBlackWindows(newMain);return 0; }

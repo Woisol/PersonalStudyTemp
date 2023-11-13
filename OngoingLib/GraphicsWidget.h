@@ -174,6 +174,13 @@ void egeButtonEffect(const Button* button, mouse_msg* mmsg, wchar_t* originalTit
 	// }
 	// delay_ms(0);//减少刷新，但是是必要的。
 }
+void egeButtonPressedEffect(const Button* button, wchar_t* originalTitle, wchar_t* pressedTitle, color_t originalColor, color_t hoveredColor, void(*pressedFunction)())
+{
+	egeDrawButton(button, hoveredColor, pressedTitle);
+	pressedFunction();
+	Sleep(200);
+	egeDrawButton(button, originalColor, originalTitle);
+}//算了下面又要加一个button结构体……算了算了艹
 
 /*----------------------------输入框类-----------------------------------------------------*/
 void egeInitInputBox(struct InputBox* inputBox, int x, int y, int width, int height, double radius)
@@ -190,7 +197,7 @@ void egeDrawInputBox(struct InputBox* inputBox)
 	setfillcolor(WHITE);
 	ege_fillrect(inputBox->x, inputBox->y, inputBox->width, inputBox->height);
 	egeDrawRoundRec(inputBox->x, inputBox->y, inputBox->width, inputBox->height, inputBox->radius, EGERGB(240, 240, 240));
-	settextjustify(LEFT_TEXT, TOP_TEXT);
+	// settextjustify(LEFT_TEXT, TOP_TEXT);//无法修改，改了更加离谱……
 	rectprintf(inputBox->x + inputBox->radius, inputBox->y + inputBox->radius, inputBox->width - 2 * inputBox->radius, inputBox->height - 2 * inputBox->radius, "%s", inputBox->content);
 }
 void egeInputBoxEffect(struct InputBox* inputBox, void(*newMain)(), void (*clearButtonEffect)())
@@ -203,7 +210,7 @@ void egeInputBoxEffect(struct InputBox* inputBox, void(*newMain)(), void (*clear
 		// flushkey();
 		switch (tempString[0])
 		{
-		case key_back:inputBox->content[strlen(inputBox->content) - 1] = '\0';break;
+		case key_back:if (strcmp(inputBox->content, "")) { inputBox->content[strlen(inputBox->content) - 1] = '\0'; }break;
 		case key_enter:newMain();break;
 		case key_esc:clearButtonEffect();break;
 		default:strcat(inputBox->content, tempString);//, 150 - sizeof(inputBox.content)
@@ -226,6 +233,7 @@ void egeDrawMsgBox(struct MsgBox* msgBox)
 	setfillcolor(WHITE);
 	ege_fillrect(msgBox->x, msgBox->y, msgBox->width, msgBox->height);
 	egeDrawRoundRec(msgBox->x, msgBox->y, msgBox->width, msgBox->height, msgBox->radius, EGERGB(240, 240, 240));
+	// settextjustify(LEFT_TEXT, TOP_TEXT);
 	rectprintf(msgBox->x + msgBox->radius, msgBox->y + msgBox->radius, msgBox->width - msgBox->radius, msgBox->height - msgBox->radius, "%s", msgBox->content);
 }
 
