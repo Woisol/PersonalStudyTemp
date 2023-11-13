@@ -148,12 +148,12 @@ int main(void) { egeNoBlackWindows(newMain);return 0; }
 
 //PT 2023-11-13 14:14
 //About:NBWHeaing V1.0
-#include"NoBlackWindows.h"
-void newMain(void)
-{
+// #include"NoBlackWindows.h"
+// void newMain(void)
+// {
 
-}
-int main(void) { egeNoBlackWindows(newMain);return 0; }
+// }
+// int main(void) { egeNoBlackWindows(newMain);return 0; }
 //PT 2023-11-13 13:35
 //About:关于获取文件路径……
 // #include<stdio.h>
