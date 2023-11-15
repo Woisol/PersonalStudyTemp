@@ -4,7 +4,7 @@
 #define nprintf(format,variable) sprintf(msgBox.content, format, variable);//注意宏定义函数与普通函数不一样只是直接替换所以不用也不要写类型名！
 //EOF 2023-11-13 13:47
 #include<stdio.h>
-#include"GraphicsWidget.h"
+#include"GraphicsWidget.c"
 //所以正确的思路应该是先用矩形大致定好布局先吧………………
 struct InputBox inputBox;
 struct MsgBox msgBox;
