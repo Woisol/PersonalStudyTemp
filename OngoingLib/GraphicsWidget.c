@@ -1,6 +1,7 @@
 //PT 2023-11-12 21:04
 //About:更新了按钮和输入框的事件
 //主要参考了https://blog.csdn.net/qq_39151563/article/details/114607800
+//!woq原来那个ISO C++ forbids converting a string constant to 'wchar_t*' [-Wwrite-strings]的报错只要加一个cosnt就解决了/笑
 // #define RoundRectButton 0
 #include<graphics.h>
 // #include<conio.h>
@@ -106,7 +107,7 @@ void egeInitButton(struct Button* button, int x, int y, int width, int height, d
 	button->height = height;
 	button->radius = radius;//md又犯了传形参的错误……
 }
-void egeDrawButton(const Button* button, color_t color, wchar_t title[])
+void egeDrawButton(const Button* button, color_t color, const wchar_t title[])
 {
 	egeDrawRoundRec(button->x, button->y, button->width, button->height, button->radius, color);
 
@@ -152,7 +153,7 @@ bool egeIsInsideButton(const Button* button, int x, int y)
 
 	return inside;
 }
-void egeButtonEffect(const Button* button, mouse_msg* mmsg, wchar_t* originalTitle, wchar_t* pressedTitle, color_t originalColor, color_t hoveredColor, void(*pressedFunction)())
+void egeButtonEffect(const Button* button, mouse_msg* mmsg, const wchar_t* originalTitle, const wchar_t* pressedTitle, color_t originalColor, color_t hoveredColor, void(*pressedFunction)())
 {
 	if (!egeIsInsideButton(button, mmsg->x, mmsg->y) && button->timerHover == 0)
 	{
@@ -174,7 +175,7 @@ void egeButtonEffect(const Button* button, mouse_msg* mmsg, wchar_t* originalTit
 	// }
 	// delay_ms(0);//减少刷新，但是是必要的。
 }
-void egeButtonPressedEffect(const Button* button, wchar_t* originalTitle, wchar_t* pressedTitle, color_t originalColor, color_t hoveredColor, void(*pressedFunction)())
+void egeButtonPressedEffect(const Button* button, const wchar_t* originalTitle, const wchar_t* pressedTitle, color_t originalColor, color_t hoveredColor, void(*pressedFunction)())
 {
 	egeDrawButton(button, hoveredColor, pressedTitle);
 	pressedFunction();

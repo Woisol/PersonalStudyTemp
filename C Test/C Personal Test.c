@@ -1232,19 +1232,201 @@
 //##################################################################################
 //PT 2023-11-12 18:05
 //About:传递函数？？？
-#include<stdio.h>
-int getData(void)
-{
-	return 1;
-}
-int add(int(*getData)())
-{
-	int a = getData();
-	return ++a;
-}
-int main(void)
-{
-	printf("%d", add(getData));
-	return 0;
-}
+// #include<stdio.h>
+// int getData(void)
+// {
+// 	return 1;
+// }
+// int add(int(*getData)())
+// {
+// 	int a = getData();
+// 	return ++a;
+// }
+// int main(void)
+// {
+// 	printf("%d", add(getData));
+// 	return 0;
+// }
 //woq居然支持得这么好，好像都没听那个教程讲过呀艹
+
+//##################################################################################
+//PT 2023-11-16 19:42
+//About:GPT:欧几里得算法求两数最大公约数
+// #include"NoBlackWindows.c"
+// //
+// int gcd(int a, int b)
+// {
+// 	if (b == 0)
+// 		return 0;
+// 	return gcd(b, a % b);
+// }
+// void newMain(void)
+// {
+
+// }
+// int main(void) { egeNoBlackWindows(newMain);return 0; }
+
+//PT 2023-11-16 20:01
+//About:将有理数变为分数
+// #include"NoBlackWindows.c"
+// int gcd(int* a, int* b)
+// {
+// 	if (*b == 0)return (*a);
+// 	int res = (*a) % (*b);//!“*”的运算顺序这么后的吗？…………
+// 	return gcd(b, &res);//!注意因为是指针所以不能&(*a % *b)………………
+// }
+// void floatToFraction(double* p, int* q)
+// {
+// 	*q = 1;
+// 	while ((*p) != (int)(*p))//!判断是不是小数的方法极其简单！
+// 	{
+// 		*q *= 10;
+// 		*p *= 10;//!服了用指针极其麻烦…………一定要注意不要漏了*！
+// 	}
+// }
+// void newMain(void)
+// {
+// 	double p = 0;
+// 	int	q = 0, intp = 0, maxgcd = 0;;//!服了还是不注意类型………………
+// 	nscanf("%lf", &p);
+// 	floatToFraction(&p, &q);
+// 	intp = (int)p;
+// 	maxgcd = gcd(&intp, &q);
+// 	p /= maxgcd;
+// 	q /= maxgcd;
+// 	nprintf("%2f", p);
+// 	nprintf("%2d", q);//!这个程序框架还是有问题……似乎无法换行输出？……
+// }
+// int main(void) { egeNoBlackWindows(newMain);return 0; }
+//td sprintf无法换行输出要调整一下…………
+
+//PT 2023-11-19 14:18
+//About:再次测试输出stdin
+// #include<stdio.h>
+// int main(void)
+// {
+// 	// char input = 0;
+// 	// fputs("abc", stdin);
+// 	// input = getc(stdin);
+// 	// printf("%c", input);
+// 	//!多次测试无效了不要再试了
+// 	return 0;
+// }
+
+//PT 2023-11-19 14:27
+//About:GPT的重定向来避免键盘输入
+//!可行，在同一目录下输入"C Personal Test.exe" < "Input Test.txt"可以实现输入
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int input = 0;
+// 	scanf("%d", &input);
+// 	printf("%d", input);
+// 	return 0;
+// }
+
+//PT 2023-11-19 14:43
+//About:尝试利用空格sscanf实现读取字符串每个字符
+//!艹并不可行…………
+// #include<stdio.h>
+// #include<string.h>
+// int main(void)
+// {
+// 	char string[10] = "abcdefghi";
+// 	char tmpc = 0, curc = 0;//!第一次使用tmp缩写
+
+// 	for (int t = 0;t < strlen(string) + 1;t++)//这里还是建议用的是strlen + 1而不是sizeof因为可能中途停止后面的即使不是空也会包括
+// 	{
+// 		sscanf(string, "%c", &tmpc);
+// 		switch (tmpc)
+// 		{
+// 		case 'a': curc = 'a';string[t] = 32;break;
+// 		case 'b': curc = 'b';string[t] = 32;break;
+// 		case 'c': curc = 'c';string[t] = 32;break;
+// 		case 'd': curc = 'd';string[t] = 32;break;
+// 		case 'e': curc = 'e';string[t] = 32;break;
+// 		case 'f': curc = 'f';string[t] = 32;break;
+// 		case 'g': curc = 'g';string[t] = 32;break;
+// 		case 'h': curc = 'h';string[t] = 32;break;
+// 		case 'i': curc = 'i';string[t] = 32;break;
+// 		case 'j': curc = 'j';string[t] = 32;break;
+// 		}
+// 	}
+// 	return 0;
+// }
+
+//PT 2023-11-19 17:07
+//About:关于二维数组的初始化形式
+// #include<stdio.h>
+// void printRecArray33(int arr[][3])
+// {
+// 	for (int n = 0;n < 3;n++)
+// 	{
+// 		for (int m = 0;m < 3;m++)
+// 		{
+// 			printf("%d ", arr[n][m]);
+// 		}
+// 		printf("\n");
+// 	}
+// 	printf("\n");
+// }
+// int main(void)
+// {
+// 	int arr1[][3] = { {1,2,3},{4,5,6},{7,8,9} };
+// 	//!注意这样虽然编译器知道是行，但是依然不能省略第一维！
+// 	int arr2[][3] = { {1},{2},{3} };
+// 	//!这种可以实现对每行的控制，每行第一个被赋值其它则是0
+
+// 	printRecArray33(arr1);printRecArray33(arr2);
+// 	return 0;
+// }
+
+//PT 2023-11-19 17:40
+//!About:const与数组
+// #include<stdio.h>
+// void constArrTest(int arr[const])
+// //!不通过，似乎不存在这样的用法
+// {
+// 	arr[0] = 0;
+// }
+// int main(void)
+// {
+// 	const int size = 2;
+// 	arrConstSize[size] = "0";
+// 	//!报错，常量不能作为数组大小！“尽管是一个const变量，但它不是一个编译时常量”
+
+// 	int arr[2] = { 1,2 };
+// 	const int constarr[2] = { 1,2 };
+// 	// constarr[0] = 0;
+// 	constArrTest(arr);
+// 	constArrTest(constarr);
+
+// 	return 0;
+// }
+
+//##################################################################################
+//BOF 2023-11-20
+//PT 2023-11-20 08:51
+//About:关于abs和fabs所在的库
+// #include<stdio.h>
+// #include<math.h>
+// int main(void)
+// {
+// 	abs(-1.5);
+// 	fabs(-2.25);
+// 	return 0;
+// }
+
+//PT 2023-11-20 08:55
+//About:关于C中的auto
+// #include<stdio.h>
+// int main(void)
+// {
+// 	auto string = "abc";
+// 	auto n = 0;
+// 	printf("%s%d", string, n);
+// 	//可以是可以但是为什么vsc不能自动补全？
+// 	//额不过果然还是因为用了g++吧在控制台用gcc是会报错的
+// 	//网查也确实只有C++11才有…………
+// 	return 0;
+// }
