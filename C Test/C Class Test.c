@@ -1,3 +1,6 @@
+//Lib 2023-12-09 09:13
+// #include "cctestio.c"
+
 //10-08 Class Test
 // #include <stdio.h>
 // #include <math.h>
@@ -1041,3 +1044,437 @@
 // 	return 0;
 // }
 /*---------------------------------------------------------------------------------*/
+
+//##################################################################################
+//BOF 2023-11-24
+//PT 2023-11-24 18:04
+//About:Test4
+// #include<stdio.h>
+// #include<string.h>
+// int main(void)
+// {
+// 	int N = 0;
+// 	char originalString[10001] = { 0 };
+// 	char targetString[10001] = { 0 };
+// 	N = 100;
+// 	// scanf("%d", &N);
+// 	for (;N > 0;N--)
+// 	{
+// 		// int times = 0, max = 0;
+// 		// scanf("%s", originalString);scanf("%s", targetString);
+// 		// int originalLen = strlen(originalString);
+// 		// char tmpString[10001] = { 0 };
+// 		// for (int t = 0;t < originalLen;t++)
+// 		// {
+// 		// 	strncpy(tmpString, originalString, strlen(targetString));
+// 		// 	// if (strncmp(tmpString, originalString, strlen(targetString)) == 0)
+// 		// 	// {
+// 		// 	// 	times++;
+// 		// 	// 	for (int t = 0;t < strlen(originalString);t++)
+// 		// 	// 	{
+// 		// 	// 		originalString[t] = originalString[t + strlen(targetString)];
+// 		// 	// 	}
+// 		// 	// }
+// 		// 	// else
+// 		// 	// {
+// 		// 	// 	times > max ? max = times : 0;
+// 		// 	// 	for (int t = 0;t < strlen(originalString);t++)
+// 		// 	// 	{
+// 		// 	// 		originalString[t] = originalString[t + 1];
+// 		// 	// 	}
+// 		// 	// }
+// 		// 	/*---------------------------------------------------------------------------------*/
+// 		// 	if (strcmp(tmpString, targetString) == 0)
+// 		// 	{
+// 		// 		times += strlen(targetString);
+// 		// 		for (int t = 0;t < strlen(originalString);t++)
+// 		// 		{
+// 		// 			originalString[t] = originalString[t + strlen(targetString)];
+// 		// 		}
+// 		// 		for (int n = 0;;n++)
+// 		// 		{
+// 		// 			if (originalString[0] == targetString[n % (strlen(targetString) - 1)])
+// 		// 			{
+// 		// 				times++;
+// 		// 				for (int t = 0;t < strlen(originalString);t++)
+// 		// 				{
+// 		// 					originalString[t] = originalString[t + 1];
+// 		// 				}
+// 		// 			}
+// 		// 			else { break; }
+// 		// 		}
+// 		// 	}
+// 		// 	else
+// 		// 	{
+// 		// 		times > max ? max = times : 0;
+// 		// 		for (int t = 0;t < strlen(originalString);t++)
+// 		// 		{
+// 		// 			originalString[t] = originalString[t + 1];
+// 		// 		}
+// 		// 	}
+// 		// }
+// 		// times > max ? max = times : 0;
+// 		// printf("%d\n", max);
+// 	}
+// 	return 0;
+// }
+//!用strncmp再写！！！
+
+//PT 2023-11-24 18:33
+//About:Test4Rewrite
+// #include<stdio.h>
+// #include<string.h>
+// char originalString[10001] = "tbmygiajyerpkgmoudpalguqrvqewutpbntyoycdwgbnundrgdigvgbcrppyzclbbautnmgdtjuqutnmgdtjuutnmgdtjoql"; //{ 0 }
+// void forward(int n)
+// {
+// 	for (int t = 0;t < strlen(originalString);t++)
+// 	{
+// 		originalString[t] = originalString[t + n];
+// 	}
+// }
+// int main(void)
+// {
+// 	int N = 0;
+// 	char targetString[10001] = "utnmgdtj";// { 0 }
+// 	N = 1;
+// 	// scanf("%d", &N);
+// 	for (;N > 0;N--)
+// 	{
+// 		int times = 0, max = 0;
+// 		// scanf("%s", originalString);scanf("%s", targetString);
+// 		int tmpLen = strlen(originalString);//!md栽这里好多次啦！！一定注意不要用这个当for判断when数组变化！！！！
+// 		for (int t = 0;t < tmpLen;t++)
+// 		{
+// 			if (strncmp(originalString, targetString, strlen(targetString)) == 0)
+// 			{
+// 				times += strlen(targetString);
+// 				forward(strlen(targetString));
+// 				for (int t = 0;t < tmpLen;t++)
+// 				{
+// 					if (originalString[0] == targetString[t % strlen(targetString)])
+// 					{
+// 						times++;
+// 						forward(1);
+// 					}
+// 					else { times > max ? max = times : 0;times = 0; break; }
+// 				}
+// 			}
+// 			else
+// 			{
+// 				times > max ? max = times : 0;
+// 				times = 0;
+// 				forward(1);
+// 			}
+// 		}
+// 		times > max ? max = times : 0;
+// 		printf("%d\n", max);
+// 	}
+// 	return 0;
+// }
+
+//##################################################################################
+//PT 2023-12-08 16:32
+//!About:Week15 ClassTest1
+// #include<string.h>
+// void forward(char* endPos, char* maxPos)
+// {
+// 	char* curPos = endPos;
+// 	for (;curPos < maxPos;curPos++)//!艹一开始思路就错了要从前往后覆盖啊啊啊…………
+// 	{
+// 		*curPos = *(curPos + 1);
+// 	}
+// 	*maxPos = 0;
+// 	// maxPos--;//!艹都-了两次了还是过头，是因为函数内吗？这不是指针吗？
+// 	//!是的看来这里好像还真改不了外面的maxPos………………
+// }
+// void reserveDigits(char* s)
+// {
+// 	char* pos = s, * maxPos = 0;
+// 	for (;*pos;pos++);
+// 	maxPos = --pos;
+// 	// for (;*pos;pos--)//这样在最后再次--的时候会导致越界…………
+// 	for (;pos >= s;pos--)
+// 	{
+// 		if ('0' > *pos || *pos > '9')
+// 		{
+// 			forward(pos, maxPos);
+// 			maxPos--;
+// 		}
+// 	}
+// }
+// void reverseStr(char* s)
+// {
+// 	char tmpS[100] = { 0 };
+// 	char* curS = s;
+// 	for (int t = strlen(s) - 1;t > -1;t--)
+// 	{
+// 		tmpS[t] = *(curS++);//!艹又来………………用指针的时候不要随便对原数据操作啊！…………
+// 	}
+// 	if (strlen(tmpS) == 0)
+// 	{
+// 		strcpy(s, "NoDigits");
+// 	}
+// 	else
+// 	{
+// 		strcpy(s, tmpS);
+// 	}
+// }
+// int main(void)
+// {
+// 	char string[] = "AAbbccDD";
+// 	reserveDigits(string);
+// 	reverseStr(string);
+// 	main();
+// 	return 0;
+// }
+
+//PT 2023-12-08 17:35
+//About:ClassTest2
+// #include<stdio.h>
+// #include<string.h>
+// void evenReverse(char* s)
+// {
+// 	char evenNum[50] = { 0 };
+// 	int maxEven = (strlen(s) - 1) / 2;
+// 	// for(;*s;s+=2);s-=2;//!这种写法还是很值得推崇的
+// 	for (int t = 0;t <= maxEven;t++)
+// 	{
+// 		evenNum[t] = *(s + (2 * (maxEven - t)));
+// 	}
+// 	for (int t = 0;t < strlen(evenNum) + 1;t++)
+// 	{
+// 		*s = evenNum[t];s += 2;
+// 	}
+// }
+// int main(void)
+// {
+// 	evenReverse("1234");
+// 	return 0;
+// }
+
+//PT 2023-12-08 17:54
+//About:Test2
+// #include<stdio.h>
+// #include<string.h>
+// void myshift(char* s)
+// {
+// 	char oddNum[50] = { 0 };
+// 	char evenNum[50] = { 0 };
+// 	for (int t = 0; t < strlen(s) + 1;t++)
+// 	{
+// 		switch (t % 2)
+// 		{
+// 		case 0: evenNum[t / 2] = *(s + t);break;
+// 		case 1: oddNum[t / 2] = *(s + t);break;
+// 			//!！！！对这种写法十分满意！！！
+// 		}
+// 	}
+// 	*s = 0;
+// 	strcpy(s, evenNum);strcat(s, oddNum);
+// }
+// int main(void)
+// {
+// 	char s[] = "0123";
+// 	myshift(s);
+// 	return 0;
+// }
+
+//PT 2023-12-08 18:20
+//!About:Test3
+// #include<stdio.h>
+// #include<stdlib.h>
+// // #define clockwise(x) 2 * n - x//!又想当然……不是这种对应关系……
+// int clockwiseY(double x, double n)//!其实这个反而是一开始的想法
+// //!所以注意有时数学的建模思维还是很重要的！
+// {
+// 	x -= (n - 1) / 2;
+// 	x = -x + (n - 1) / 2;//!服了还在想当然……变了中心以后再加减是不同的不要直接返回-x！
+// 	return x;
+// }
+// void rotate(int** matrix, int n)
+// {
+// 	// if (n == 1)return;
+// 	int tmpMatrix[n][n];
+// 	// int curX = n - 1, curY = 0, dir = 0;//!又没有注意逻辑……一开始的时候就已经达到“边界”的条件要++了……
+// 	//!所以总结是重点关注开头和结束？！
+
+// 	for (int i = 0; i < n; i++)
+// 		for (int j = 0; j < n; j++)
+// 			tmpMatrix[j][clockwiseY(i, n)] = matrix[i][j];//!牢记那些常见的变换矩阵会很省时间…………
+// 	//!这里想当然的认为[i][j]就是那样的顺序了，不过确实也是【划去】…………
+
+// 		// int x[] = { 0,-1,0,1 };
+// 		// int y[] = { 1,0,-1,0 };//!欸嘿用的是ls的方法哈哈
+// 		// int limit[] = { 0,0,0,0 };
+// 		// for (int t = 0;t < n * n;t++)//!漏写t++
+// 		// {
+// 			// tmpMatrix[curX][curY] = **(matrix + t);
+// 			// if ((curX == n - limit[0] - 1) && (curY == limit[3]))dir = 0;
+// 			// else if ((curX == n - limit[0] - 1) && (curY == n - limit[1] - 1))dir = 1;
+// 			// else if ((curX == limit[2] +  1) && (curY == limit[3]))dir = 2;
+// 			// else if ((curX == n - limit[0] - 1) && (curY == limit[3]))dir = 0;//!放弃……其实思路根本就和螺旋打印不同…………
+// 			// if (curY > n - limit[1] - 2)//!而且还有问题，你这样的写法会导致在一行上面每一个元素都满足边界都要拐弯………………
+// 			// {
+// 			// 	limit[]++;dir++;//!服了你了……这个时候该加的不是同一边的而是上一边的…………
+// 			// }
+// 			// else if (curX < limit[1])
+// 			// {
+// 			// 	limit[0]++;dir++;
+// 			// }
+// 			// else if (curY < limit[2])//!这里逻辑也出问题……一开始的时候就满足了导致一直都是这里……
+// 			// 	//!不过这也体现了用数组预定数据的好处很方便修改
+// 			// {
+// 			// 	limit[1]++;dir++;
+// 			// }
+// 			// else if (curX > n - limit[3] - 2)
+// 			// {
+// 			// 	limit[2]++;dir++;
+// 			// }
+// 		// curX += x[dir / 4];curY += y[dir / 4];//!艹……+=打成==…………………………
+// 		// }
+// 	// for (int i = 0; i < n; i++)
+// 	// 	for (int j = 0; j < n; j++)
+// 	// 		tmpMatrix[i][j] = matrix[i][j];
+// 	for (int t = 0;t < n * n; t++)
+// 	{
+// 		// *((*matrix) + t) = *((*tmpMatrix) + t);//!请注意二维数组用*必须用两个！//!咳咳这里是用的指针形式所以用**反而会导致一维数组越界
+// 		//!via ls！！！请记死这个写法！要回到“地址的地址”这个本质上！！！而不是简单的*或者**！！！
+// 		//!不这个写法也是错误的……具体总结见下
+// 	}
+
+// }
+// int main(void)
+// {
+// 	int n = 3;
+// 	// int** matrix; //= { 1,2,3,	4, 5, 6,7,8,9 };//!不要忘记换行是用反的！！！艹为什么还是没办法换行写…………查查？
+// 	//!艹服了这里初始化极其麻烦用**说scalar object 'matrix' requires one element in initializer用[3][3]又是下面这个………………
+// 	int t = 0;
+// 	int** matrix = (int**)malloc(n * sizeof(int*));//!啊这两个都要？？？
+// 	for (int i = 0; i < n; i++)
+// 		matrix[i] = (int*)malloc(n * sizeof(int));//!请注意这里如果不申请内存是会段错误的
+
+// 	for (int i = 0; i < n; i++)
+// 		for (int j = 0; j < n; j++)
+// 			matrix[i][j] = ++t;//!艹你输入的数据和幻想的不同……………………………………………………搞得debug这么久都不知道其实得了/哭
+
+// 	rotate(matrix, n);//!can't convert *int[3] to **int………………
+// 	for (int i = 0; i < n; i++)
+// 		free(matrix[i]);//!妈耶就是这里free不了……
+// 	free(matrix);
+// 	//!大问题！！！@NB：
+// 	//!对于二维数组的指针访问，考虑到“地址的地址”的本质，使用*当然不对，而使用**只能读取第一行
+// 	//!但NB给出了一个方法，使用一维指针指向&a[][]后就可以使用指针来访问了
+// 	//!但是这样要求内存是连续的
+// 	//!在本题中矩阵的内存是每列各自malloc的就恶心…………
+// 	main();
+// 	return 0;
+// }
+//##################################################################################
+//PT 2023-12-09 09:01
+//!About:Test1这题基本把指针和数组的玩法都给你了……好好看看……
+// #include<stdio.h>
+// int matrix[3][3] = { 0 };//!这个不放在上面监视不了就烦……
+// void matrixInput(int(*mat)[3])
+// {
+// 	int tmpNum = 0;//!又犯了每次循环都重置为0的毛病…………
+// 	for (int i = 0;i < 3;i++)
+// 	{
+// 		for (int j = 0;j < 3;j++)
+// 		{
+// 			// scanf("%d", &tmpNum);
+// 			(*(mat + i))[j] = ++tmpNum;//!请注意运算顺序是() -> [] -> *
+// 			// (*mat + i)[j] = ++tmpNum;//!开始的写法……自己注意吧
+// 		}
+// 	}
+// }
+
+// void matrixAddT(int* mat)//!这个思路也很强！！你的逻辑果然还是太差了好好练练……
+// {
+// 	for (int i = 0;i < 3; i++)
+// 		for (int j = 2;j >= i; j--)
+// 		{
+// 			*(mat + i * 3 + j) += *(mat + j * 3 + i);//!说起来这个刚好也是昨晚NB说的，这种形式就可以访问全部元素
+// 			//!wok…………是思路错了……左上三角加过以后右下三角再加就又加多了…………
+// 		}
+// 	for (int i = 1; i < 3;i++)
+// 		for (int j = 0; j < i;j++)
+// 			*(mat + i * 3 + j) = *(mat + j * 3 + i);
+// }
+
+// void matrixPrint(int* mat[3])
+// {
+// 	for (int i = 0;i < 3;i++)
+// 	{
+// 		for (int j = 0;j < 3;j++)
+// 		{
+// 			printf("%d ", *((mat[i]) + j));
+// 			// printf("%d ", *(mat[i]) + j);
+// 		}
+// 		printf("\n");
+// 	}
+// }
+
+// int main(void)
+// {
+// 	int t = 0;
+// 	for (int i = 0; i < 3; i++)
+// 		for (int j = 0; j < 3; j++)
+// 			matrix[i][j] = ++t;
+// 	matrixInput(matrix);
+// 	matrixAddT(&matrix[0][0]);
+// 	int* p[3] = { NULL, NULL, NULL };
+// 	for (int row = 0; row < 3; row++)
+// 		*(p + row) = *(matrix + row);
+
+// 	// print result
+// 	matrixPrint(p);
+// 	main();
+// 	return 0;
+// }
+
+
+//PT 2023-12-09 10:08
+//About:Test4//!干脆直接顺便写了冒泡…………
+// #include<stdio.h>
+// // void merge(int* arr, int start, int mid, int end)
+// // {
+// // 	char flag = 0, pos = 0;
+// // 	for(int t = end;t >= start; t --)
+// // 	{
+// // 		for( int t = start; t < end)
+// // 	}
+// // }
+// int array[4] = { 0,1,3,2 };
+// void mergeSort(int* arr, int start, int end)
+// {
+// 	char flag = 0, pos = 0;
+// 	for (int t = 0; t < end - start + 1; t++, flag = 0)
+// 	{
+// 		for (int t = start; t < end; t++)
+// 		{
+// 			if (*(arr + t) > *(arr + t + 1))
+// 			{
+// 				flag = 1;
+// 				*(arr + t) += *(arr + t + 1);
+// 				*(arr + t + 1) = *(arr + t) - *(arr + t + 1);
+// 				*(arr + t) = *(arr + t) - *(arr + t + 1);
+// 			}
+// 		}
+// 		if (flag == 0)break;
+// 	}
+// }
+// //!az题目是什么？读不懂不想读不用读/笑
+// int main(void)
+// {
+// 	mergeSort(array, 0, 3);
+// 	return 0;
+// }
+
+//PT 2023-12-09 10:45
+//About:None
+#include<stdio.h>
+int main(void)
+{
+	putchar()
+		return 0;
+}

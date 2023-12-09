@@ -145,7 +145,7 @@
 
 // 08-29
 
-// PT3 关于char[]末尾不包括'/0'的问题
+// PT 关于char[]末尾不包括'/0'的问题
 // 好奇怪,yf那边末尾不加\0是会出问题的...他那边是变成(
 // #include <stdio.h>
 // int main(void)
@@ -164,7 +164,7 @@
 
 // // 08-31/09-01
 
-// // PT4 各种进制转化
+// // PT 各种进制转化
 // #include <stdio.h>
 // int main(void)
 // {
@@ -218,7 +218,7 @@
 // 	return 0;
 // }
 
-// // PT5 判断整数位数
+// // PT 判断整数位数
 // // 原创
 // #include <stdio.h>
 // int main(void)
@@ -836,7 +836,7 @@
 // 	return 0;
 // }
 //EOF 2023-11-08 21:53//woq搞了一个晚上啊啊啊啊！说好搞好人升的又搞不了了啊啊啊！！！
-/*----------------------------打开文件次数-----------------------------------------------------*/
+//**----------------------------打开文件次数-----------------------------------------------------*/
 
 //##################################################################################
 //BOF 2023-11-09
@@ -1430,3 +1430,125 @@
 // 	//网查也确实只有C++11才有…………
 // 	return 0;
 // }
+
+//##################################################################################
+//BOF 2023-11-24
+//PT 2023-11-24 14:54
+//About:关于数组的另一种定义方式
+// #include<stdio.h>
+// int main(void)
+// {
+// 	char* testChar = "Can this run? \0 Guest it can.";
+// 	//!警告ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+// 	//!同时这个\0是可以正常使用的
+// 	printf("%s", testChar);
+// 	return 0;
+// }
+
+//PT 2023-12-01 16:13
+//About:关于指针的加减
+// #include<stdio.h>
+// int main(void)
+// {
+// 	char arr[2] = { 'a','b' };
+// 	char* parr1 = &arr[0], * parr2 = &arr[1];
+// 	printf("*parr1 = %c\t*parr2 = %c\n%%s of *parr1 = Error\nparr2 - parr1 = %d", *parr1, *parr2, parr2 - parr1);
+// 	//!可以证实加减就是得到元素个数的差值
+// 	return 0;
+// }
+
+//PT 2023-12-01 16:22
+//About:关于2[a]…………
+// #include<stdio.h>
+// int main(void)
+// {
+// 	char a[5] = "Test";
+// 	printf("0[a] = %c", 0[a]);
+// 	//艹真行
+// 	return 0;
+// }
+
+//PT 2023-12-01 16:23
+//About:关于二维数组的行引用
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int arr[2][2] = { 1,2,3,4 };
+// 	int* pRow0 = arr[0];
+// 	// int* pRow1[2] = { arr,arr + 1 };//!虽然是行指针但是不能这样初始化……报错将int[2]变成int
+// 	int* pRow2[2] = { arr[0],arr[1] };//!所以这个a[]本身就是一个行指针！！
+// 	//!啊但是为什么arr[0] & [1]只是一个元素？
+// 	printf("pRow2[0][1] = %d", pRow2[0][1]);
+// 	//!咳咳可以的这样以后还是得到了一个行
+// 	return 0;
+// }
+
+//##################################################################################
+//BOF 2023-12-04
+//PT 2023-12-04 20:23
+//About:文件夹名修改后调整
+//az只要修改了vsc的配置就行
+// #include"NoBlackWindows.c"
+// void newMain(void)
+// {
+// 	nprintf("%d", 1);
+// }
+// int main(void) { egeNoBlackWindows(newMain);return 0; }
+//##################################################################################
+//PT 2023-12-08 15:30
+//!About:逐个对比的一种方法
+// #include<stdio.h>
+// int main(void)
+// {
+// 	char* limitsChar = "abc";//!注意要用这种用法这里不能是数组不然无法使用++
+// 	char input = 0;
+
+// 	scanf("%c", &input);
+// 	for (;*limitsChar;limitsChar++)
+// 	{
+// 		if (input == *limitsChar) { printf("Exist"); return 0; }
+// 	}
+// 	printf("Not Exist");
+// 	return 0;
+// }
+
+//PT 2023-12-08 15:58
+//About:printx?//!az并没有这种东西
+// #include<stdio.h>
+// #include<stdlib.h>
+// int main(void)
+// {
+// 	int num = 0;
+
+// 	return 0;
+// }
+
+//PT 2023-12-08 21:17
+//About:关于二维数组和指针的问题
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int arr[2][2] = { 1,2,3,4 };
+// 	int** parr = arr;//!请注意毕竟还是二维要用**
+// 	//!艹二维数组指针似乎没有那么简单赋值
+// 	//!NB：要么用malloc要么必须(*p)[3]…………
+// 	//!同时(*p)[3]的时候p++是访问的下一行（~本质）
+// 	//!好像突然更理解arr[i][j]的本质了…………
+// 	printf("%d", *(*parr + 3));
+// 	return 0;
+// }
+
+//PT 2023-12-09 10:51
+//##About:关于指针函数的使用
+//!这里就是基本使用方法了……
+#include<stdio.h>
+int testFunc(int x)
+{
+	return ++x;
+}
+int main(void)
+{
+	int (*pfunc)(int) = &testFunc;//!'int (*)(int)' to 'int (*)()'
+	pfunc(1);
+	return 0;
+}
