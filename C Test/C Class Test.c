@@ -712,18 +712,18 @@
 // }
 // int main(void) { egeNoBlackWindows(newMain);return 0; }
 
-//PT 2023-11-17 22:40
-//!About:Test2:螺旋打印
+//**PT 2023-11-17 22:40
+//##About:Test2:螺旋打印
 // #include"NoBlackWindows.c"
 // void newMain(void)
 // {
 
 // 	int m = 3, n = 1;
 // 	int matrix[m][n] = { 1, 2, 3 };//, 4, 5, 6, 7, 8, 9 , 10, 11, 12 ,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30
-	// int* arr = matrix;//注意数组指针的声明欸不能这样声明吗?...
+	// int* arr = matrix;//!注意数组指针的声明欸不能这样声明吗?...
 	// for (int t = 0; t < m * n;t++)
 	// {
-	// 	*(matrix + t) = t + 1;//欸C不能二维数组用一维读取的嘛,只能用指针,欸不能写入吗?
+	// 	*(matrix + t) = t + 1;//!欸C不能二维数组用一维读取的嘛,只能用指针,欸不能写入吗?
 // 	}
 
 	// int limm = 0, limn = 0, curn = 0, curm = 0;//!用limit的话无法及时限制到已打印的上、右端，导致无法及时检查边界
@@ -757,8 +757,8 @@
 	// 	limn++;
 	// }
 	//##################################################################################
-	//EOF 2023-11-19 10:00:00+
-	/*----------------------------Rewrite-11-19-----------------------------------------------------*/
+	//**EOF 2023-11-19 10:00:00+
+	//**----------------------------Rewrite-11-19-----------------------------------------------------*/
 	// int curn = 0, curm = 0, minn = 0, minm = 0, maxn = n - 1, maxm = m - 1;
 	// for (int t = 0;t < (m + 1) / 2;t++)
 	// {
@@ -789,7 +789,7 @@
 	// 	minn++;
 	// 	curn++;
 	// }
-	/*----------------------------GPT-----------------------------------------------------*/
+	//**----------------------------GPT-----------------------------------------------------*/
 	//???过了???为什么呜呜呜
 	// int i, k = 0, l = 0;
 
@@ -825,7 +825,7 @@
 	// 		l++;
 	// 	}
 	// }
-	/*----------------------------GPT-修改-----------------------------------------------------*/
+	//**----------------------------GPT-修改-----------------------------------------------------*/
 // 	int curn = 0, curm = 0, minn = 0, minm = 0, maxn = n - 1, maxm = m - 1;
 // 	for (int t = 0;t < (m + 1) / 2;t++)
 // 	{
@@ -1046,6 +1046,7 @@
 /*---------------------------------------------------------------------------------*/
 
 //##################################################################################
+//td以下似乎都没有TN…………有空记得……上面可能也有。
 //BOF 2023-11-24
 //PT 2023-11-24 18:04
 //About:Test4
@@ -1173,8 +1174,8 @@
 // }
 
 //##################################################################################
-//PT 2023-12-08 16:32
-//!About:Week15 ClassTest1
+//**PT 2023-12-08 16:32
+//**About:Week15 ClassTest1
 // #include<string.h>
 // void forward(char* endPos, char* maxPos)
 // {
@@ -1228,8 +1229,8 @@
 // 	return 0;
 // }
 
-//PT 2023-12-08 17:35
-//About:ClassTest2
+//**PT 2023-12-08 17:35
+//**About:ClassTest2
 // #include<stdio.h>
 // #include<string.h>
 // void evenReverse(char* s)
@@ -1252,8 +1253,8 @@
 // 	return 0;
 // }
 
-//PT 2023-12-08 17:54
-//About:Test2
+//**PT 2023-12-08 17:54
+//**About:Test2
 // #include<stdio.h>
 // #include<string.h>
 // void myshift(char* s)
@@ -1266,7 +1267,7 @@
 // 		{
 // 		case 0: evenNum[t / 2] = *(s + t);break;
 // 		case 1: oddNum[t / 2] = *(s + t);break;
-// 			//!！！！对这种写法十分满意！！！
+// 			//! ！！！对这种写法十分满意！！！
 // 		}
 // 	}
 // 	*s = 0;
@@ -1279,16 +1280,16 @@
 // 	return 0;
 // }
 
-//PT 2023-12-08 18:20
-//!About:Test3
+//**PT 2023-12-08 18:20
+//**About:Test3
 // #include<stdio.h>
 // #include<stdlib.h>
-// // #define clockwise(x) 2 * n - x//!又想当然……不是这种对应关系……
-// int clockwiseY(double x, double n)//!其实这个反而是一开始的想法
+// // #define clockwise(x) 2 * n - x//@又想当然……不是这种对应关系……
+// int clockwiseY(double x, double n)//@其实这个反而是一开始的想法
 // //!所以注意有时数学的建模思维还是很重要的！
 // {
 // 	x -= (n - 1) / 2;
-// 	x = -x + (n - 1) / 2;//!服了还在想当然……变了中心以后再加减是不同的不要直接返回-x！
+// 	x = -x + (n - 1) / 2;//@服了还在想当然……变了中心以后再加减是不同的不要直接返回-x！
 // 	return x;
 // }
 // void rotate(int** matrix, int n)
@@ -1301,27 +1302,27 @@
 // 	for (int i = 0; i < n; i++)
 // 		for (int j = 0; j < n; j++)
 // 			tmpMatrix[j][clockwiseY(i, n)] = matrix[i][j];//!牢记那些常见的变换矩阵会很省时间…………
-// 	//!这里想当然的认为[i][j]就是那样的顺序了，不过确实也是【划去】…………
+// 	//@这里想当然的认为[i][j]就是那样的顺序了，不过确实也是【划去】…………
 
 // 		// int x[] = { 0,-1,0,1 };
-// 		// int y[] = { 1,0,-1,0 };//!欸嘿用的是ls的方法哈哈
+// 		// int y[] = { 1,0,-1,0 };//@欸嘿用的是ls的方法哈哈
 // 		// int limit[] = { 0,0,0,0 };
-// 		// for (int t = 0;t < n * n;t++)//!漏写t++
+// 		// for (int t = 0;t < n * n;t++)//@漏写t++
 // 		// {
 // 			// tmpMatrix[curX][curY] = **(matrix + t);
 // 			// if ((curX == n - limit[0] - 1) && (curY == limit[3]))dir = 0;
 // 			// else if ((curX == n - limit[0] - 1) && (curY == n - limit[1] - 1))dir = 1;
 // 			// else if ((curX == limit[2] +  1) && (curY == limit[3]))dir = 2;
 // 			// else if ((curX == n - limit[0] - 1) && (curY == limit[3]))dir = 0;//!放弃……其实思路根本就和螺旋打印不同…………
-// 			// if (curY > n - limit[1] - 2)//!而且还有问题，你这样的写法会导致在一行上面每一个元素都满足边界都要拐弯………………
+// 			// if (curY > n - limit[1] - 2)//@而且还有问题，你这样的写法会导致在一行上面每一个元素都满足边界都要拐弯………………
 // 			// {
-// 			// 	limit[]++;dir++;//!服了你了……这个时候该加的不是同一边的而是上一边的…………
+// 			// 	limit[]++;dir++;//@服了你了……这个时候该加的不是同一边的而是上一边的…………
 // 			// }
 // 			// else if (curX < limit[1])
 // 			// {
 // 			// 	limit[0]++;dir++;
 // 			// }
-// 			// else if (curY < limit[2])//!这里逻辑也出问题……一开始的时候就满足了导致一直都是这里……
+// 			// else if (curY < limit[2])//@这里逻辑也出问题……一开始的时候就满足了导致一直都是这里……
 // 			// 	//!不过这也体现了用数组预定数据的好处很方便修改
 // 			// {
 // 			// 	limit[1]++;dir++;
@@ -1330,7 +1331,7 @@
 // 			// {
 // 			// 	limit[2]++;dir++;
 // 			// }
-// 		// curX += x[dir / 4];curY += y[dir / 4];//!艹……+=打成==…………………………
+// 		// curX += x[dir / 4];curY += y[dir / 4];//@艹……+=打成==…………………………
 // 		// }
 // 	// for (int i = 0; i < n; i++)
 // 	// 	for (int j = 0; j < n; j++)
@@ -1346,10 +1347,10 @@
 // int main(void)
 // {
 // 	int n = 3;
-// 	// int** matrix; //= { 1,2,3,	4, 5, 6,7,8,9 };//!不要忘记换行是用反的！！！艹为什么还是没办法换行写…………查查？
+// 	// int** matrix; //= { 1,2,3,	4, 5, 6,7,8,9 };//td不要忘记换行是用反的！！！艹为什么还是没办法换行写…………查查？
 // 	//!艹服了这里初始化极其麻烦用**说scalar object 'matrix' requires one element in initializer用[3][3]又是下面这个………………
 // 	int t = 0;
-// 	int** matrix = (int**)malloc(n * sizeof(int*));//!啊这两个都要？？？
+// 	int** matrix = (int**)malloc(n * sizeof(int*));//@啊这两个都要？？？额是你自己不看清楚……这里是申请指针的内存哈哈
 // 	for (int i = 0; i < n; i++)
 // 		matrix[i] = (int*)malloc(n * sizeof(int));//!请注意这里如果不申请内存是会段错误的
 
@@ -1357,33 +1358,34 @@
 // 		for (int j = 0; j < n; j++)
 // 			matrix[i][j] = ++t;//!艹你输入的数据和幻想的不同……………………………………………………搞得debug这么久都不知道其实得了/哭
 
-// 	rotate(matrix, n);//!can't convert *int[3] to **int………………
+// 	rotate(matrix, n);//@can't convert *int[3] to **int………………
 // 	for (int i = 0; i < n; i++)
-// 		free(matrix[i]);//!妈耶就是这里free不了……
+// 		free(matrix[i]);//@妈耶就是这里free不了……
 // 	free(matrix);
-// 	//!大问题！！！@NB：
-// 	//!对于二维数组的指针访问，考虑到“地址的地址”的本质，使用*当然不对，而使用**只能读取第一行
-// 	//!但NB给出了一个方法，使用一维指针指向&a[][]后就可以使用指针来访问了
-// 	//!但是这样要求内存是连续的
-// 	//!在本题中矩阵的内存是每列各自malloc的就恶心…………
+// 	//！大问题！！！@NB：
+// 	//！对于二维数组的指针访问，考虑到“地址的地址”的本质，使用*当然不对，而使用**只能读取第一行
+// 	//！但NB给出了一个方法，使用一维指针指向&a[][]后就可以使用指针来访问了
+// 	//！但是这样要求内存是连续的
+// 	//！在本题中矩阵的内存是每列各自malloc的就恶心…………
 // 	main();
 // 	return 0;
 // }
 //##################################################################################
-//PT 2023-12-09 09:01
-//!About:Test1这题基本把指针和数组的玩法都给你了……好好看看……
+//**PT 2023-12-09 09:01
+//##About:
+//##这题基本把指针和数组的玩法都给你了……好好看看……
 // #include<stdio.h>
-// int matrix[3][3] = { 0 };//!这个不放在上面监视不了就烦……
+// int matrix[3][3] = { 0 };//@这个不放在上面监视不了就烦……
 // void matrixInput(int(*mat)[3])
 // {
-// 	int tmpNum = 0;//!又犯了每次循环都重置为0的毛病…………
+// 	int tmpNum = 0;//！又犯了每次循环都重置为0的毛病…………
 // 	for (int i = 0;i < 3;i++)
 // 	{
 // 		for (int j = 0;j < 3;j++)
 // 		{
 // 			// scanf("%d", &tmpNum);
 // 			(*(mat + i))[j] = ++tmpNum;//!请注意运算顺序是() -> [] -> *
-// 			// (*mat + i)[j] = ++tmpNum;//!开始的写法……自己注意吧
+// 			// (*mat + i)[j] = ++tmpNum;//@开始的写法……自己注意吧
 // 		}
 // 	}
 // }
@@ -1394,7 +1396,7 @@
 // 		for (int j = 2;j >= i; j--)
 // 		{
 // 			*(mat + i * 3 + j) += *(mat + j * 3 + i);//!说起来这个刚好也是昨晚NB说的，这种形式就可以访问全部元素
-// 			//!wok…………是思路错了……左上三角加过以后右下三角再加就又加多了…………
+// 			//！wok…………是思路错了……左上三角加过以后右下三角再加就又加多了…………
 // 		}
 // 	for (int i = 1; i < 3;i++)
 // 		for (int j = 0; j < i;j++)
@@ -1433,8 +1435,8 @@
 // }
 
 
-//PT 2023-12-09 10:08
-//About:Test4//!干脆直接顺便写了冒泡…………
+//**PT 2023-12-09 10:08
+//##About:Test4,干脆直接顺便写了冒泡…………
 // #include<stdio.h>
 // // void merge(int* arr, int start, int mid, int end)
 // // {
@@ -1463,18 +1465,277 @@
 // 		if (flag == 0)break;
 // 	}
 // }
-// //!az题目是什么？读不懂不想读不用读/笑
+// //@az题目是什么？读不懂不想读不用读/笑
 // int main(void)
 // {
 // 	mergeSort(array, 0, 3);
 // 	return 0;
 // }
 
-//PT 2023-12-09 10:45
-//About:None
-#include<stdio.h>
-int main(void)
-{
-	putchar()
-		return 0;
-}
+//~~PT 2023-12-09 10:45
+//~~About:R.P.putchar
+//~~ #include<stdio.h>
+//~~ int main(void)
+//~~ {
+//~~ 	putchar()
+//~~ 		return 0;
+//~~ }
+//##################################################################################
+//**PT 2023-12-11 15:56
+//tdAbout:螺旋打印的另一个思路：标记拐弯点？！
+// #include<stdio.h>
+// int main(void)
+// {
+
+// 	return 0;
+// }
+
+//##################################################################################
+//**PT 2023-12-15 16:30
+//**About:ClassTest1
+// #include<stdio.h>
+// #include<string.h>
+// void switchArray(int, int, int*, int*);//！这种可变长的没办法用全局变量……老老实实传进去吧
+// int main(void)
+// {
+// 	int n = 0;
+// 	scanf("%d", &n);
+// 	char strArray[n][100];
+// 	int  order[n] = { 0 }, arrayLen[n] = { 0 };
+// 	// for (int t = 0; t < n;t++)
+// 	//!不用两次循环了都一样的放一起吧
+// 	for (int t = 0;t < n;t++)//!真的服了你了…………不要随便修改原值…………后面要用你都不知道……
+// 	{
+// 		order[t] = t;
+// 		scanf("%s", strArray[t]);
+// 		arrayLen[t] = strlen(strArray[t]);
+// 	}
+// 	for (int loop = 0; loop < n; loop++)//td对简单排序不熟悉，就是那个依次选取最小的那个……
+// 		for (int t = 0;t < n - 1;t++)
+// 		{
+// 			if (arrayLen[t] > arrayLen[t + 1])switchArray(t, t + 1, order, arrayLen);
+// 		}
+// 	for (int t = 0;t < n;t++)
+// 	{
+// 		printf("%s\n", strArray[order[t]]);//！这个定一个顺序数组的方法也不错以后可以借鉴借鉴
+// 	}
+// 	return 0;
+// }
+// void switchArray(int a, int b, int* porder, int* parraLen)
+// {
+// 	int* order = porder, * arrayLen = parraLen;
+// 	order[a] += order[b];
+// 	order[b] = order[a] - order[b];
+// 	order[a] = order[a] - order[b];
+// 	arrayLen[a] += arrayLen[b];
+// 	arrayLen[b] = arrayLen[a] - arrayLen[b];
+// 	arrayLen[a] = arrayLen[a] - arrayLen[b];
+// }
+
+//**PT 2023-12-15 17:05
+//**About:ClassTest2
+// #include<stdio.h>
+// #include<string.h>
+// int main(void)
+// {
+// 	int n = 0, studentRemain = 0;
+// 	scanf("%d", &n);
+// 	studentRemain = n;
+// 	char isOut[n] = { 0 };
+// 	memset(isOut, n, sizeof(char));
+// 	int curSign = 1, curStudent = 0;//!这个curSign被迫改了…………（并没有）
+// 	for (;studentRemain > 1;curStudent = (++curStudent) % n)//！注意这里也要考虑到一次循环后要回到数组起点…………
+// 		//!啊为什么老是写成/而不是%？？？？
+// 		//!服了数组下标和实际是真的难崩艹……
+// 		//！请注意有时候真的要老老实实静下心来好好跟着程序走一遍才知道哪里出问题的……
+// 	{
+// 		if (!isOut[curStudent])
+// 		{
+// 			if (curSign == 3)
+// 			{
+// 				isOut[curStudent] = 1;
+// 				studentRemain--;
+// 			}
+// 			curSign = curSign % 3 + 1;
+// 			// curSign = (++curSign) % studentRemain;//!你个…………而且为什么要curSign++？？明明都已经是赋值了…………
+// 			// curStudent = (++curStudent) % studentRemain;//!这个一样只有在没有out时才能迭代！！//额不对…………
+// 		}
+// 	}
+// 	for (int t;t < n;t++)
+// 	{
+// 		if (!isOut[t]) { printf("%d", t + 1);return 0; }
+// 	}
+// 	// do
+// 	// {
+// 	// 	if (!isOut[curStudent])
+// 	// 	{
+// 	// 		curStudent++;
+// 	// 		if (curSign++ == 3)
+// 	// 		{
+
+// 	// 		}
+// 	// 	}
+// 	// } while (studentRemain > 0)//!混乱……重写
+// 		// for(int t = 0,cur = 3;t < n -1 ;t++,cur+= 2)
+// 	// {
+// 	// 	isOut[cur/n - 1] = 1;
+// 	// }
+// 	//!思路不对…………out了的是不算在里面了的…………
+// 	main();
+// 	return 0;
+// }
+
+//**PT 2023-12-15 17:59
+//**About:Test1
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int n = 0, size = 0;
+
+// 	scanf("%d %d", &n, &size);//！记得这种写法了，以后别写两个了…………
+// 	int a[size + 1] = { 0 };
+// 	a[size] = n;
+// 	// for (;size >= 0;)//!额这次果然还是不行…………
+// 	for (int t = 0;t < size;)//！可以的，按照这样的思路：要用原始数据之前先问问自己后面要不要用到就行
+// 	{
+// 		scanf("%d", &a[t++]);//!艹没想到你有一天也会忘记这个&………………
+// 	}
+// 	for (int isSorted = 0, isOperated = 0;!isSorted;isOperated = 0)//!对其实也不需要判断最多循环次数小于个数……不论如何到最后一定是排好序了的所以只要判断这个就行
+// 	{
+// 		for (int cur = 0;cur < size;cur++)
+// 		{
+// 			if (a[cur] > a[cur + 1])
+// 			{
+// 				a[cur] += a[cur + 1];a[cur + 1] = a[cur] - a[cur + 1];a[cur] -= a[cur + 1];
+// 				isOperated = 1;
+// 			}
+// 		}
+// 		if (!isOperated) { isSorted = 1; }//！…………这个为什么是写在里面？？？？
+// 	}
+// 	for (int t = 0;t < size + 1;t++)
+// 		printf("%d", a[t]);
+// 	//td尝试优化冒泡算法到最简！
+// 	//!而且你一点都不熟悉…………这个冒泡写了巨久……好好理理思路吧你…………
+// 	return 0;
+// }
+
+//**PT 2023-12-15 18:26
+//**About:Test2
+// #include<stdio.h>
+// #include<ctype.h>//！好用的库！！
+// //td学学！！
+// #include<string.h>
+// void reverseWords(char* sentence, int len)
+// {
+// 	// char *pSentence[end - start +1] = sentence
+// 	for (int t = 0;t < (len - 2) / 2 + 1; t++)
+// 	{
+// 		if (len < 2)return;//！注意！！！这个交换算法在交换一个元素的时候会出问题！！！你自己加加看……
+// 		sentence[t] += sentence[len - t - 1];
+// 		sentence[len - t - 1] = sentence[t] - sentence[len - t - 1];
+// 		sentence[t] -= sentence[len - t - 1];//!嗯这个算法已经比较熟了哈哈
+// 	}
+
+// }
+// int main(void)
+// {
+// 	char sentence[100] = "";
+
+// 	scanf("%[^\n]*", sentence);//！芜湖默写成功，记得这个*是在后面！
+// 	// gets(sentence);//！gets不熟悉…………所以
+// 	// strcspn(sentence, "\n");//！！！！in string.h用来除去字符串中的特定字符！！！记住啦！
+// 	char* sentencePos = sentence;
+// 	int len = 0;
+// 	for (;*sentencePos;)
+// 	{
+// 		for (len = 0;*sentencePos && !ispunct(*sentencePos) && !isspace(*sentencePos);sentencePos++, len++);
+// 		reverseWords(sentencePos - len, len);
+// 		for (;*sentencePos && (ispunct(*sentencePos) || isspace(*sentencePos));sentencePos++);
+// 		//！这两个函数也好用！判断是不是标点！！！
+// 	}
+// 	printf("%s", sentence);
+// 	main();
+// 	return 0;
+// }
+
+//**PT 2023-12-15 19:56
+//**About:Test3
+// #include<stdio.h>
+// #include<stdlib.h>
+// void sort(int* a, int n)
+// {
+// 	for (;;)
+// 	{
+// 		int isOperated = 0;
+// 		for (int t = 0;t < n - 1;t++)
+// 		{
+// 			if (a[t] > a[t + 1]) { a[t] += a[t + 1]; a[t + 1] = a[t] - a[t + 1]; a[t] -= a[t + 1]; isOperated = 1; }
+// 		}
+// 		if (!isOperated)return;
+// 	}
+// }
+// int main(void)
+// {
+// 	int nA = 0, nB = 0;
+// 	scanf("%d", &nA);
+// 	int A[nA] = { 0 };
+// 	for (int t = 0;t < nA;t++)
+// 		scanf("%d", &A[t]);
+// 	scanf("%d", &nB);
+// 	int B[nB] = { 0 };
+// 	for (int t = 0;t < nB;t++)
+// 		scanf("%d", &B[t]);
+// 	int startPos = 0;
+
+// 	sort(A, nA);sort(B, nB);
+// 	// qsort(A, nA);qsort(B, nB);//！az在stdlib里面额好吧还不会用哈哈
+// 	//td学一下qsort啦！
+// 	for (int a = 0, b = 0;a < nA;a++)
+// 	{
+// 		if (A[a] == B[b])
+// 		{
+// 			if (b == 0) { startPos = a; }
+// 			if (++b == nB) { printf("Yes,%d", startPos);return 0; }
+// 		}
+// 	}
+// 	printf("No");
+// 	main();
+// 	return 0;
+// }
+
+//**PT 2023-12-15 20:23
+//**About:Test4
+//！wok本题绝对简单的要死你搞这么久…………
+//！就是最简单的向后传递问题…………
+//！说明完全不熟…………
+// #include<stdio.h>
+// // void switch (char* cup, int a, int B)//！艹重名了…………expected unqualified-id before 'switch'
+// void Switch(char* cup, int a, int b)//艹搞反了不过改一下ab就可以/笑
+// {
+// 	cup[a] += cup[b];
+// 	cup[b] = cup[a] - cup[b];
+// 	cup[a] -= cup[b];
+// }
+// int main(void)
+// {
+// 	char cup[101] = { 0 };//！其实为了防乱也可以把第一个元素忽略掉？？！！
+// 	int n = 0, m = 0;
+// 	scanf("%d %d", &n, &m);
+// 	cup[n] = 1;
+// 	char tmpChar = 0;
+
+// 	// cup[3] = cup[99];//！但是这样会导致丢失了2的数据…………
+// 	tmpChar = cup[99];
+// 	for (int t = 6;t < 100;t += 3) { cup[t] = cup[(t - 3)]; }
+// 	cup[3] = tmpChar;
+// 	tmpChar = cup[100];
+// 	for (int t = 4;t < 101;t += 2) { cup[t] = cup[(t - 2)]; }
+// 	cup[2] = tmpChar;
+// 	// for (int t = 0;t < 100;t += 2)
+// 	// {
+// 	// 	// Switch(cup, t / 100, (t + 2) / 100);//!服了你了根本就不是交换…………害
+// 	// }
+// 	if (cup[m])printf("Yes!");
+// 	else printf("No!");
+// 	return 0;
+// }

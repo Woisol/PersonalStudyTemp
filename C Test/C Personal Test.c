@@ -1406,7 +1406,7 @@
 
 //##################################################################################
 //BOF 2023-11-20
-//PT 2023-11-20 08:51
+//**PT 2023-11-20 08:51
 //About:关于abs和fabs所在的库
 // #include<stdio.h>
 // #include<math.h>
@@ -1417,7 +1417,7 @@
 // 	return 0;
 // }
 
-//PT 2023-11-20 08:55
+//**PT 2023-11-20 08:55
 //About:关于C中的auto
 // #include<stdio.h>
 // int main(void)
@@ -1433,7 +1433,7 @@
 
 //##################################################################################
 //BOF 2023-11-24
-//PT 2023-11-24 14:54
+//**PT 2023-11-24 14:54
 //About:关于数组的另一种定义方式
 // #include<stdio.h>
 // int main(void)
@@ -1445,7 +1445,7 @@
 // 	return 0;
 // }
 
-//PT 2023-12-01 16:13
+//**PT 2023-12-01 16:13
 //About:关于指针的加减
 // #include<stdio.h>
 // int main(void)
@@ -1457,7 +1457,7 @@
 // 	return 0;
 // }
 
-//PT 2023-12-01 16:22
+//**PT 2023-12-01 16:22
 //About:关于2[a]…………
 // #include<stdio.h>
 // int main(void)
@@ -1468,7 +1468,7 @@
 // 	return 0;
 // }
 
-//PT 2023-12-01 16:23
+//**PT 2023-12-01 16:23
 //About:关于二维数组的行引用
 // #include<stdio.h>
 // int main(void)
@@ -1485,8 +1485,8 @@
 
 //##################################################################################
 //BOF 2023-12-04
-//PT 2023-12-04 20:23
-//About:文件夹名修改后调整
+//**PT 2023-12-04 20:23
+//**About:文件夹名修改后调整
 //az只要修改了vsc的配置就行
 // #include"NoBlackWindows.c"
 // void newMain(void)
@@ -1495,8 +1495,8 @@
 // }
 // int main(void) { egeNoBlackWindows(newMain);return 0; }
 //##################################################################################
-//PT 2023-12-08 15:30
-//!About:逐个对比的一种方法
+//**PT 2023-12-08 15:30
+//**About:逐个对比的一种方法
 // #include<stdio.h>
 // int main(void)
 // {
@@ -1512,8 +1512,9 @@
 // 	return 0;
 // }
 
-//PT 2023-12-08 15:58
-//About:printx?//!az并没有这种东西
+//**PT 2023-12-08 15:58
+//**About:printx?
+//!az并没有这种东西
 // #include<stdio.h>
 // #include<stdlib.h>
 // int main(void)
@@ -1523,8 +1524,8 @@
 // 	return 0;
 // }
 
-//PT 2023-12-08 21:17
-//About:关于二维数组和指针的问题
+//**PT 2023-12-08 21:17
+//**About:关于二维数组和指针的问题
 // #include<stdio.h>
 // int main(void)
 // {
@@ -1538,17 +1539,86 @@
 // 	return 0;
 // }
 
-//PT 2023-12-09 10:51
-//##About:关于指针函数的使用
+//**PT 2023-12-09 10:51
+//**About:关于指针函数的使用
 //!这里就是基本使用方法了……
-#include<stdio.h>
-int testFunc(int x)
-{
-	return ++x;
-}
-int main(void)
-{
-	int (*pfunc)(int) = &testFunc;//!'int (*)(int)' to 'int (*)()'
-	pfunc(1);
-	return 0;
-}
+// #include<stdio.h>
+// int testFunc(int x) { return ++x; }
+// int main(void)
+// {
+// 	int (*pfunc)(int) = &testFunc;//!'int (*)(int)' to 'int (*)()'
+// 	pfunc(1);
+// 	return 0;
+// }
+
+//##################################################################################
+//**PT 2023-12-10 14:22
+//**About:关于三目运算符……
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int a = 1, b = 2;
+//! 	a > b ? : a = b;
+//! 	// a < b ? a = b : ;//!az上一条可以这一条就不行！
+// 	return 0;
+// }
+
+//**PT 2023-12-10 14:35
+//**About:宏定义函数相关
+// #include<stdio.h>
+// #define abs(x) {\
+// if (x < 0)return -x;\
+// else return x;\
+// }
+
+// int main(void)
+// {
+// 	printf("%d", abs(-2));
+// 	return 0;
+// }
+//**EOF 2023-12-11 16:00：艹服了不干了烦死
+
+//##################################################################################
+//**PT 2023-12-15 20:52
+//**About:关于C中用字符串表示格式化字符？？？
+// #include<stdio.h>
+// int main(void)
+// {
+// 	char string[] = "So it truly EXISTS!";//！艹真行…………比较这个函数传进去的东西本质也是字符串呀哈哈哈
+// 	char FormatString[] = "%s";
+// 	printf(FormatString, string);
+// 	return 0;
+// }
+
+//**PT 2023-12-15 20:57
+//**About:一个选择题中出现的麻烦递归
+// #include<stdio.h>
+// void fun(char* s) {
+// 	char t;
+// 	if (*s)
+// 	{
+// 		t = *s++;
+// 		fun(s);
+// 	}
+// 	if (t != '\0')
+// 		putchar(t);//！是的……利用好递归的本质，递到最后在返回来！所以是最后一个fun先putchar再逐渐返回！
+// }
+// int main() {
+// 	char* a = "1234";
+// 	fun(a);
+// 	printf("\n");
+// 	return 0;
+// }
+
+//**PT 2023-12-15 21:06
+//**About:选择题中出现的问题……
+// #include<stdio.h>
+// #include<string.h>
+// int main() {
+// 	char* p1, * p2, str[50] = "ABCDEFG";
+// 	p1 = "abcd";
+// 	p2 = "efgh";
+// 	strcpy(str + 1, p2 + 1);//！请注意后面的结束符也是一起复制过来的！！
+// 	strcpy(str + 3, p1 + 3);
+// 	printf("%s", str);
+// }
