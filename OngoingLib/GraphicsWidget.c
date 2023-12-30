@@ -12,7 +12,8 @@
 #define FPS_COMMON 60
 #define FPS 120
 
-/*----------------------------结构体-----------------------------------------------------*/
+//**----------------------------结构体-----------------------------------------------------
+//**---------------------------------------------------------------------------------
 struct Button
 {
 	int x, y;
@@ -44,7 +45,7 @@ struct MsgBox
 	char content[150] = { 0 };
 };
 
-/*----------------------------窗口类-----------------------------------------------------*/
+//**----------------------------窗口类-----------------------------------------------------
 void egeWindowInition(const char* caption, const int winWidth, const int winHeight, const int x, const int y, bool debug = 0)
 {
 	if (debug == 0) { setinitmode(INIT_RENDERMANUAL, x, y); }
@@ -57,7 +58,7 @@ void egeWindowInition(const char* caption, const int winWidth, const int winHeig
 	setbkmode(TRANSPARENT);//艹又是莫名其妙哈哈加了这个后面的文字背景就透明了
 }
 
-/*----------------------------画图类-----------------------------------------------------*/
+//**----------------------------画图类-----------------------------------------------------
 void egeBarWithBondery(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2)
 {
 	line(x1, y1, x2, y1);
@@ -98,7 +99,7 @@ void egeDrawRoundRec(int x, int y, int width, int height, double radius, color_t
 	//这里的作图思路是先填充上下和中间的矩形，到两边的矩形，最后才填充圆。
 }
 
-/*----------------------------按钮类-----------------------------------------------------*/
+//**----------------------------按钮类-----------------------------------------------------
 void egeInitButton(struct Button* button, int x, int y, int width, int height, double radius)
 {
 	button->x = x;
@@ -183,7 +184,7 @@ void egeButtonPressedEffect(const Button* button, const wchar_t* originalTitle, 
 	egeDrawButton(button, originalColor, originalTitle);
 }//算了下面又要加一个button结构体……算了算了艹
 
-/*----------------------------输入框类-----------------------------------------------------*/
+//**----------------------------输入框类-----------------------------------------------------
 void egeInitInputBox(struct InputBox* inputBox, int x, int y, int width, int height, double radius)
 {
 	inputBox->x = x;
@@ -220,7 +221,7 @@ void egeInputBoxEffect(struct InputBox* inputBox, void(*newMain)(), void (*clear
 
 }
 
-/*----------------------------文本框类-----------------------------------------------------*/
+//**----------------------------文本框类-----------------------------------------------------
 void egeInitMsgBox(struct MsgBox* msgBox, int x, int y, int width, int height, double radius)
 {
 	msgBox->x = x;
@@ -238,7 +239,7 @@ void egeDrawMsgBox(struct MsgBox* msgBox)
 	rectprintf(msgBox->x + msgBox->radius, msgBox->y + msgBox->radius, msgBox->width - msgBox->radius, msgBox->height - msgBox->radius, "%s", msgBox->content);
 }
 
-/*----------------------------滑块类-----------------------------------------------------*/
+//**----------------------------滑块类-----------------------------------------------------
 
 void egeInitSlideBar(struct SlideBar* slideBar, int x, int y, int width, int height, double radius, bool isVertical = 0, int defaultValue = 10)
 {
@@ -286,4 +287,38 @@ void egeSlideBarEffect(struct SlideBar* slideBar, char* output, mouse_msg* mmsg,
 	}
 }
 
+//**PT 2023-12-30 09:27
+//**About:NewMethod shown below
+//**----------------------------通用-----------------------------------------------------
+bool egeIsInsideRec(int recX, int recY, int recWidth, int recHeight, int radius, int x, int y)
+{
+	bool inside = false;
+
+	// 点在包围矩形内
+	if ((x >= recX) && (y >= recY)
+		&& (x < recX + recWidth)
+		&& (y < recY + recHeight)
+		)
+	{
+
+		double centerx = recX + recWidth / 2.0f;
+		double centery = recY + recHeight / 2.0f;
+		double dx = (double)fabs(x - centerx);
+		double dy = (double)fabs(y - centery);
+		double interWidth = recWidth / 2.0f - radius;
+		double interHeight = recHeight / 2.0f - radius;
+
+		// 点不在圆角空白处 ()
+		if (!((dx > interWidth)
+			&& (dy > interHeight)
+			&& ((dx - interWidth) * (dx - interWidth) + (dy - interHeight) * (dy - interHeight)
+	> radius * radius)
+			)
+			)
+		{
+			inside = true;
+		}
+	}
+
+	return inside;
 
