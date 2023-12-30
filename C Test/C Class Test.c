@@ -1739,3 +1739,456 @@
 // 	else printf("No!");
 // 	return 0;
 // }
+
+//##################################################################################
+//**PT 2023-12-22 16:09
+//##About:关于三目运算符的嵌套？！！
+// #include<stdio.h>
+// int main(void)
+// {
+// 	double num = 0;
+// 	// char sgn = 0;
+// 	scanf("%lf", &num);
+// 	// sgn = (int)num % 1;//不对这个思路都不对哈哈算了判断吧
+// 	// printf("%d",sgn);
+
+// 	num > 0 ? printf("1") : num < 0 ? printf("-1") : printf("0");//！艹哈哈就是这里，三目运算符的嵌套！
+// 	//！欸可以不用括号？！
+// 	//dtd而且为什么只用一个;？
+//！本身三目运算符就需要一个;但是一个结构里面估计就不用了吧
+// 	main();
+// 	return 0;
+// }
+
+//**PT 2023-12-22 16:46
+//**About:Test5
+// #include<stdio.h>
+// int main(void)
+// {
+// 	long n = 0, a = 0, m = 0, x = 0;
+// 	scanf("%d", &n);
+// 	for (;n > 0;n--)
+// 	{
+// 		scanf("%ld %ld", &a, &m);
+// 		for (x = 0;x < a + 1;x++)
+// 		{
+// 			if (a * x % m == 1)
+// 				// if(!(a * x % m)-1)//！注意这种方式是不对的！！可能负数的时候是不算true吧！
+// 			{
+// 				printf("%ld\n", x);goto Out;
+// 			}
+// 		}
+// 		printf("false\n");
+// 	Out:
+// 	}
+// 	return 0;
+// }
+
+//**PT 2023-12-22 16:47
+//##About:丑数新思路！！
+//！很妙的思路！！
+//td看看你之前是怎么写的？？
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int n = 0;
+// 	scanf("%d", &n);
+// 	if (!n) { printf("false");return 0; }
+// 	while (!(n % 2))n /= 2;
+// 	while (!(n % 3))n /= 3;
+// 	while (!(n % 5))n /= 5;
+// 	if (n == 1)printf("true");
+// 	else printf("false");
+// 	return 0;
+// }
+
+//**PT 2023-12-22 16:51
+//**About:TestH7
+//!fuc好好反思…………其实思路还是很简单的你搞了这么久…………
+// #include<stdio.h>
+// unsigned int ow1 = 0, ow2, ow3;
+// inline int getCertainNum(int n, int pos)
+// {
+// 	return ow1 = n << (pos - 1) >> 31;
+// }
+// inline int judgeNum(unsigned int n)
+// {
+// 	for (int t = 1;t < 17;t++)
+// 	{
+// 		if (getCertainNum(n, t) != getCertainNum(n, 33 - t))return 0;//!md逻辑错误这么久没发现……有一个错误就不得而不是有一个正确就得！！！
+// 	}
+// 	return 1;
+// }
+// int main(void)
+// {
+// 	//!上次做这题是期中吗？(是的)这次有时间好好看题以后感觉还是比较容易的？至少能看懂了
+// 	unsigned int n = 0, T = 0;
+// 	// scanf("%u", &T);//!啊注意是%u不是%ud啊！不然就只读了d啦！！！[NOT]
+// 	for (;;T--)//T > 0
+// 	{
+// 		scanf("%u", &n);
+// 		for (int k = 1;k < 32;k++)
+// 		{
+// 			// if (n == (ow = (n << k) | (n >> (32 - k)))) { printf("true%d\n", k);goto Out; }//!艹……不审题…………是和交换后的相同！！！
+// 			if (judgeNum((n << k) | (n >> (32 - k)))) { printf("true%d\n", k);goto Out; }
+// 		}
+// 		printf("false\n");
+// 	Out:continue;;//！没有一个语句就会expected primary-expression before '}' token？？？
+// 	}
+// 	return 0;
+// }
+
+//**PT 2023-12-22 17:40
+//**About:ClassTest1
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int n = 0;
+// 	scanf("%d", &n);
+// 	if (!n) { printf("QiDong");return 0; }
+// 	int order[n];
+// 	char class_name[n][16];
+// 	int starTime[n], endTime[n];
+// 	for (int t = 0;t < n;t++) { scanf("%s %d %d", class_name[t], &starTime[t], &endTime[t]); }
+// 	// for (int t = 0;t < n;)order[t] = t++;//td？？？这里为什么不行？？
+// 	for (int t = 0;t < n;t++)order[t] = t;
+
+// 	//**----------------------------冒泡-----------------------------------------------------
+// 	//！舍！用冒泡必须要求原数据调序简单！像这种调序极其麻烦！！！
+// 		// for(int t = 0,isOperated = 0;t < n;t++,isOperated = 0)
+// 		// {
+// 		// 	for(int t = 0;t < n; t++)
+// 		// 	{
+// 		// 		if()
+// 		// 	}
+// 		// }
+
+// 	//**----------------------------旧排序方法-简单排序-----------------------------------------------------
+// 		//!用简单排序法，但是思路都错了
+// 		//td看看哪里除了问题&修改！
+// 		// for (int t = 0;t < n; t++)
+// 		// {
+// 		// 	static int tmpmin = 23;
+// 		// 	for (int a = 0;a < n; a++)
+// 		// 	{
+// 		// 		if (tmpmin > starTime[a]) { order[t] = a;tmpmin = starTime[a]; }//!请注意这种方法如果这样可能会漏掉第一个…………
+// 		// 	}//!md你个舍，都没有去掉已经排入了的最小time…………往后循环肯定是一样的结果啊！！！
+// 		// }
+// 	//**----------------------------EOF 旧排序方法-简单排序-----------------------------------------------------
+// 	//##----------------------------新简单排序法-----------------------------------------------------
+// 	//！复习：hello算法中是将排序的放在末尾再用n-1来取未排序区间…………
+// 	//!但是你这里不能对原数据排序所以…………麻了
+// 	for (int lastMin = 0, o = 0;o < n;o++)
+// 	{
+// 		int curMin = 23;//!又犯了每次循环都赋值为0的毛病…………
+// 		//！如何避免这些低级错误？：好好思考！！想好了再写！！！
+// 		for (int t = 0;t < n;t++)//curMin = 23………………搞了这个又保存不了curMin了………………
+// 		{
+// 			if (starTime[t] > lastMin && starTime[t] < curMin) { curMin = starTime[t]; order[o] = t; }//lastMin如果在这里就修改了那后面就没办法判断了…………
+// 		}
+// 		lastMin = curMin;
+
+// 	}
+// 	for (int t = 0;t < n;t++) { printf("%02d:00 ~ %02d:00 : %s\n", starTime[order[t]], endTime[order[t]], class_name[order[t]]); }
+// 	return 0;
+// }
+//**PT 2023-12-22 18:04
+//**About:ClassTest1: OuterAnswer
+// #include<stdio.h>
+// int n;
+// #define N 30011
+// struct node
+// {
+// 	char name[101];
+// 	int s, e;
+// }cla[N];
+// int main()
+// {
+// 	scanf("%d\n", &n);
+// 	if (n == 0)
+// 	{
+// 		printf("QiDong\n");return 0;
+// 	}
+// 	for (int i = 1;i <= n;i++)
+// 	{
+// 		scanf("%s", cla[i].name);
+// 		scanf("%d%d\n", &cla[i].s, &cla[i].e);
+// 	}
+// 	for (int i = 1;i <= 24;i++)
+// 	{
+// 		for (int j = 1;j <= n;j++)
+// 		{
+// 			if (cla[j].s == i)
+// 			{
+// 				if (cla[j].s < 10) printf("0");
+// 				printf("%d:00 ~ ", cla[j].s);
+// 				if (cla[j].e < 10) printf("0");
+// 				printf("%d:00 : ", cla[j].e);
+// 				printf("%s", cla[j].name);
+// 				printf("\n");
+// 				break;
+// 			}
+// 		}
+// 	}
+// }
+
+//**PT 2023-12-22 18:03
+//**About:ClassTest2: OuterAnswer
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+// struct ListNode
+// {
+// 	int val;
+// 	struct ListNode* next;
+// };
+
+// struct ListNode* addNode(int val) {
+// 	struct ListNode* p = (struct ListNode*)malloc(sizeof(struct ListNode));
+// 	p->val = val;
+// 	p->next = NULL;
+// 	return p;
+// }
+
+// void freeList(struct ListNode* head) {
+// 	if (head == NULL)   return;
+// 	freeList(head->next);
+// 	head->next = NULL;
+// 	free(head);
+// }
+
+// void printList(struct ListNode* head) {
+// 	if (head == NULL)
+// 	{
+// 		puts("NULL");
+// 		return;
+// 	}
+// 	while (head)
+// 	{
+// 		printf("%d ", head->val);
+// 		head = head->next;
+// 	}
+// 	puts("");
+// }
+
+//**----------------------------作答部分-----------------------------------------------------
+// struct ListNode* deleteNodeOfList(struct ListNode* list, int value);
+// struct ListNode* deleteNodeOfList(struct ListNode* list, int value)
+// {
+// 	struct ListNode* last = (struct ListNode*)malloc(sizeof(struct ListNode));
+// 	last = list;
+// 	struct ListNode* heads = (struct ListNode*)malloc(sizeof(struct ListNode));
+// 	heads = list;
+// 	if (list == NULL) return NULL;
+// 	if ((list->val) == value)
+// 	{
+// 		return list->next;
+// 	}
+// 	while (list != NULL)
+// 	{
+// 		if ((list->val) == value)
+// 		{
+// 			last->next = list->next;break;
+// 		}
+// 		last = list;
+// 		list = list->next;
+// 	}
+// 	return heads;
+// }
+//**----------------------------EOF 作答部分-----------------------------------------------------
+// int main() {
+// 	int n, value;
+// 	scanf("%d %d", &n, &value);
+
+// 	struct ListNode* head = addNode(-1), * cur = head;
+// 	for (int i = 1, x; i <= n; ++i)
+// 	{
+// 		scanf("%d", &x);
+// 		cur->next = addNode(x);
+// 		cur = cur->next;
+// 	}
+
+// 	struct ListNode* res = deleteNodeOfList(head->next, value);
+// 	printList(res);
+// 	freeList(res);
+// 	free(head);
+// 	return 0;
+// }
+
+// //**----------------------------能过的-----------------------------------------------------
+// #include <stdlib.h>
+// #include "ListNode.h"
+
+
+// struct ListNode* deleteNodeOfList(struct ListNode* list, int value) {
+// 	struct ListNode* delete = (struct ListNode*)malloc(sizeof(struct ListNode));
+// 	delete->next = list;
+// 	struct ListNode* cur = delete;
+// 	while (cur->next)
+// 	{
+// 		if (cur->next->val == value)
+// 		{
+// 			struct ListNode* tmp = cur->next;
+// 			cur->next = tmp->next;
+// 			free(tmp);
+// 			break;
+// 		}
+// 		cur = cur->next;
+// 	}
+// 	struct ListNode* res = delete->next;
+// 	free(delete);
+// 	return res;
+// }
+
+//**PT 2023-12-22 20:07
+//##About:列表中的结构体和指针
+//！不熟悉！看！
+//td未完成麻了烦死
+// struct ListNode
+// {
+// 	int val;
+// 	struct ListNode* next;
+// };//！注意跨文件时必须要再声明一遍结构体！
+
+// struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2)
+// {
+// 	struct ListNode* curPtr = NULL, * heading = NULL;//！再次强调指针多定义需要每个前面都加上*！
+// 	if (list1->val < list2->val)
+// 	{
+// 		heading = curPtr = list1;
+// 		list1 = list1->next;
+// 	}
+// 	else
+// 	{
+// 		heading = curPtr = list2;
+// 		list2 = list2->next;
+// 	}
+
+
+// 	while (list1 != NULL || list2 != NULL)//curPtr//！额不能这样写？
+// 	{
+// 		if (list1 == NULL) { curPtr->next = list2;list2 = list2->next; }
+// 		else if (list2 == NULL) { curPtr->next = list1;list1 = list1->next; }
+// 		// if (list1 == NULL && list2 == NULL) { break; }//!按NB的做法这里要放在while里面判断
+// 		else if (list1->val < list2->val)
+// 		{
+// 			curPtr->next = list1;
+// 			list1 = list1->next;
+// 			// curPtr = curPtr->next;//!这个可以放在后面了……
+// 		}
+// 		else
+// 		{
+// 			curPtr->next = list2;
+// 			list2 = list2->next;
+// 		}
+// 		curPtr = curPtr->next;
+// 	}
+// 	return heading;
+// }
+
+//**PT 2023-12-29 16:57
+//**About:ClassTest1
+// #include <stdio.h>
+// #include<stdlib.h>
+
+// struct Node
+// {
+// 	struct Node* next;
+// 	int value;
+// };
+// void insert(struct Node** head, int num)
+// {
+// 	struct Node* newNode = NULL;
+// 	struct Node* curNode = *head;
+
+
+// 	if ((*head) == NULL)//~~这个()是确实要的！！不要会报错！！（额并不是）
+// 	{
+// 		(*head) = (struct Node*)malloc(sizeof(struct Node));//！az注意结构体的指针必须要在转化类型！
+// 		(*head)->value = num;
+// 		(*head)->next = NULL;
+// 		return;
+// 	}
+// 	newNode = (struct Node*)malloc(sizeof(struct Node));
+// 	newNode->value = num;
+// 	// if ((*head)->next = NULL)
+// 	// {
+// 	// }//!不应该用这种思路……即使到了后面依然可能出现要在第一个位置插的情况！
+//！再次明确啦！先想好再写！慢才是快！不然改半天你………………
+// 	while (curNode->next != NULL && curNode->next->value < num)
+// 		curNode = curNode->next;
+// 	if (curNode->value < num)
+// 	{
+// 		newNode->next = curNode->next;
+// 		curNode->next = newNode;
+// 	}
+// 	else
+// 	{
+// 		newNode->next = curNode;
+// 		(*head) = newNode;
+// 	}
+// }
+
+// void print_linklist(struct Node* head)
+// {
+// 	while (head != NULL)
+// 	{
+// 		printf("%d ", head->value);
+// 		head = head->next;
+// 	}
+// }
+
+// void delete_linklist(struct Node* head)
+// {
+// 	struct Node* lastNode = NULL;
+// 	while (head != NULL)
+// 	{
+// 		lastNode = head;
+// 		head = head->next;//！记住这个思路啦！常用的！
+// 		//	free(lastNode->next);//！区分free是free指向的东西而不是指针本身！！！感谢ls不然要卡死
+// 	//！注意Matrix里面SINAL_TERMINAL有可能就是free错误了………………
+// 		free(lastNode);//!lastNode used after free哈哈哈哈
+// 	}
+// 	//	free(lastNode);
+// 	//	free(head);
+// }
+//~~ //**----------------------------main.c-----------------------------------------------------
+//~~ int main(void) {
+//~~ 	int n, num;
+//~~ 	scanf("%d", &n);
+//~~ 	struct Node* head = NULL;
+//~~ 	while (n--)
+//~~ 	{
+//~~ 		scanf("%d", &num);
+//~~ 		insert(&head, num);
+//~~ 	}
+//~~ 	print_linklist(head);
+//~~ 	delete_linklist(head);
+//~~ 	main();
+//~~ }
+//~~**---------------------------------------------------------------------------------
+
+//**PT 2023-12-29 17:48
+//**About:ClassTest2
+// #include<stdio.h>
+// int main(void)
+// {
+// 	int M = 0, N = 0, cock = 0, hen = 0, chickTimes = 0;
+// 	char hasAnswer = 0;
+// 	scanf("%d %d", &M, &N);
+// 	for (cock = M / 5;cock > -1; cock--)
+// 		for (hen = M / 3;hen > -1;hen--)
+// 			for (chickTimes = M;chickTimes > -1;chickTimes--)
+// 			{
+// 				if ((cock + hen + 3 * chickTimes == N) && (5 * cock + 3 * hen + chickTimes == M))
+// 				{
+// 					printf("%d %d %d\n", cock, hen, chickTimes * 3);
+// 					hasAnswer = 1;
+// 				}
+// 			}
+// 	if (!hasAnswer)printf("no answer");
+// 	return 0;
+// }
+
+/*Author: Woisol
+/*abc: */
